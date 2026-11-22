@@ -1,0 +1,30 @@
+{
+ "name": "Goalquista",
+ "short_name": "Goalquista",
+ "lang": "it",
+ "description": "Conquista l\u2019Europa una domanda di calcio alla volta: un gioco di strategia e quiz sul calcio europeo, in italiano e in inglese.",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#0f2a1f",
+ "theme_color": "#0f2a1f",
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-512-maskable.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
