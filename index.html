@@ -14,8 +14,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Goalquista">
 <meta property="og:description" content="Conquista l’Europa una domanda di calcio alla volta: un gioco di strategia e quiz sul calcio europeo, in italiano e in inglese.">
-<meta property="og:image" content="https://bernoleonardo-cell.github.io/goalquista/icons/og.jpg">
-<meta property="og:url" content="https://bernoleonardo-cell.github.io/goalquista/">
+<meta property="og:image" content="https://goalquista.com/icons/og.jpg">
+<meta property="og:url" content="https://goalquista.com/">
 <meta name="twitter:card" content="summary_large_image">
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
@@ -3372,7 +3372,7 @@ class Component extends DCLogic {
     if (G && G.daily && rk.phase === 'over') {
       const w = winner(G), r = Math.min(G.round, MAX_ROUNDS), sq = id => G.own[id] === 'me' ? '🟦' : G.own[id] === 'cpu' ? '🟥' : '⬜';
       const grid = [0, 7, 14].map(k => COUNTRIES.slice(k, k + 7).map(c => sq(c.id)).join('')).join('\n');
-      dailyText = `Goalquista · Daily challenge · ${fmt(G.daily)}\n${w === 'me' ? `🏆 Mission complete in round ${r}` : w === 'cpu' ? `❌ Beaten in round ${r}` : `🤝 Draw in round ${r}`} · ${G.myPts.toLocaleString()} pts\n${grid}\nhttps://bernoleonardo-cell.github.io/goalquista/`;
+      dailyText = `Goalquista · Daily challenge · ${fmt(G.daily)}\n${w === 'me' ? `🏆 Mission complete in round ${r}` : w === 'cpu' ? `❌ Beaten in round ${r}` : `🤝 Draw in round ${r}`} · ${G.myPts.toLocaleString()} pts\n${grid}\nhttps://goalquista.com/`;
     }
     const share = () => {
       const done = () => this.say('good', 'Copied!', 'Paste it to a friend');
