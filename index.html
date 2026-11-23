@@ -19,15 +19,17 @@
 <meta name="twitter:card" content="summary_large_image">
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
-<script>window.GQ_FB = {"apiKey": "AIzaSyBVR0WimG-zXXZfTDm-X0hJc5ALGxo8RnA", "authDomain": "goalquista.firebaseapp.com", "databaseURL": "https://goalquista-default-rtdb.europe-west1.firebasedatabase.app", "projectId": "goalquista", "storageBucket": "goalquista.firebasestorage.app", "messagingSenderId": "193103757780", "appId": "1:193103757780:web:8c2d193ed117374fcd5641"}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
+<script>window.GQ_WEB = true; window.GQ_FB = {"apiKey": "AIzaSyBVR0WimG-zXXZfTDm-X0hJc5ALGxo8RnA", "authDomain": "goalquista.firebaseapp.com", "databaseURL": "https://goalquista-default-rtdb.europe-west1.firebasedatabase.app", "projectId": "goalquista", "storageBucket": "goalquista.firebasestorage.app", "messagingSenderId": "193103757780", "appId": "1:193103757780:web:8c2d193ed117374fcd5641"}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet><style>
 @font-face{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url(fonts/alfa-slab-one-latin-400-normal.woff2) format('woff2');}@font-face{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url(fonts/alfa-slab-one-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:400;font-display:swap;src:url(fonts/rubik-latin-400-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:400;font-display:swap;src:url(fonts/rubik-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-latin-500-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:600;font-display:swap;src:url(fonts/rubik-latin-600-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:600;font-display:swap;src:url(fonts/rubik-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:700;font-display:swap;src:url(fonts/rubik-latin-700-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:700;font-display:swap;src:url(fonts/rubik-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}
+@media (min-width: 900px) and (min-aspect-ratio: 5/4){.rk-felt:has(.rk-risk){max-width:none!important}.rk-risk{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;column-gap:24px;row-gap:12px!important;align-items:start;padding:20px 24px 28px!important}.rk-colA,.rk-colB{display:flex!important;flex-direction:column;gap:12px;grid-column:2;min-width:0}.rk-colA{grid-row:1}.rk-colB{grid-row:2}.rk-mapcol{grid-column:1;grid-row:1/3;position:sticky;top:0;min-width:0}.rk-mapcol>.rk-tip{position:absolute!important;top:14px;left:14px;right:66px;z-index:3}}
 body{margin:0;background:#0f2a1f;overscroll-behavior:none;font-family:Rubik,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
+.rk-colA,.rk-colB{display:contents}
 button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
 .rk-felt{background:radial-gradient(ellipse 120% 70% at 50% 28%,#2f6b50 0%,#215640 55%,#173f2e 100%)}
 .rk-felt::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(45deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),repeating-linear-gradient(-45deg,rgba(255,255,255,.06) 0 1px,transparent 1px 3px)}
@@ -287,7 +289,8 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
 </sc-if>
 
 <sc-if value="{{ isRisk }}" hint-placeholder-val="{{ false }}">
-<div class="rk-screen" style="position:relative;height:100%;overflow-y:auto;padding:56px 16px 30px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+<div class="rk-screen rk-risk" style="position:relative;height:100%;overflow-y:auto;padding:56px 16px 30px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+  <div class="rk-colA">
 
   <div class="rk-wood" style="border-radius:16px;padding:8px 10px;display:flex;flex-direction:column;gap:8px">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
@@ -343,8 +346,9 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     </sc-if>
   </div>
 
+  </div>
   <sc-if value="{{ rShowMap }}" hint-placeholder-val="{{ true }}">
-    <div class="rk-screen" style="display:flex;flex-direction:column;gap:8px">
+    <div class="rk-screen rk-mapcol" style="display:flex;flex-direction:column;gap:8px">
     <sc-if value="{{ tipMap }}" hint-placeholder-val="{{ false }}">
       <div class="rk-tip" role="note" style="position:relative;border-radius:12px;background:#e3b341;color:#2a1d12;padding:11px 12px 10px 14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 4px 0 #9c7419">
         <span aria-hidden="true" style="position:absolute;left:28px;bottom:-7px;width:14px;height:14px;background:#e3b341;transform:rotate(45deg)"></span>
@@ -356,8 +360,8 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       </div>
     </sc-if>
       <div class="rk-wood" style="position:relative;border-radius:16px;padding:6px">
-        <div ref="{{ mapRef }}" style="aspect-ratio:{{ mapBoxAspect }};overflow:auto;-webkit-overflow-scrolling:touch;border-radius:11px;background:#a9c3c0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3),inset 0 0 18px rgba(30,60,60,.35)">
-          <svg role="img" aria-label="Map of Europe" viewBox="{{ mapViewBox }}" style="display:block;width:{{ mapW }};height:auto">
+        <div class="rk-mapbox" ref="{{ mapRef }}" style="aspect-ratio:{{ mapBoxAspect }};height:{{ mapBoxHt }};overflow:auto;-webkit-overflow-scrolling:touch;border-radius:11px;background:#a9c3c0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3),inset 0 0 18px rgba(30,60,60,.35)">
+          <svg role="img" aria-label="Map of Europe" viewBox="{{ mapViewBox }}" style="display:block;width:{{ mapW }};height:{{ mapH }};margin:0 auto">
             <defs>
               <symbol id="fl-ITA" viewBox="0 0 30 20" preserveAspectRatio="none"><rect x="0" y="0" width="10.05" height="20" style="fill:#009246"></rect><rect x="10" y="0" width="10.05" height="20" style="fill:#f1f2f1"></rect><rect x="20" y="0" width="10.05" height="20" style="fill:#ce2b37"></rect></symbol>
               <symbol id="fl-FRA" viewBox="0 0 30 20" preserveAspectRatio="none"><rect x="0" y="0" width="10.05" height="20" style="fill:#0055a4"></rect><rect x="10" y="0" width="10.05" height="20" style="fill:#f1f2f1"></rect><rect x="20" y="0" width="10.05" height="20" style="fill:#ef4135"></rect></symbol>
@@ -496,6 +500,7 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     </div>
   </sc-if>
 
+  <div class="rk-colB">
   <sc-if value="{{ rIsMap }}" hint-placeholder-val="{{ true }}">
     <div class="rk-screen" style="display:flex;flex-direction:column;gap:12px">
     <sc-if value="{{ tipPanel }}" hint-placeholder-val="{{ false }}">
@@ -780,6 +785,7 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       </sc-if>
     </div>
   </sc-if>
+  </div>
 </div>
   <div aria-live="polite" style="position:absolute;left:0;right:0;top:36%;z-index:5;pointer-events:none">
     <sc-if value="{{ coA }}" hint-placeholder-val="{{ false }}">
@@ -2543,6 +2549,9 @@ function dailySetup(day) {
 }
 // Map zoom: 0 shows all of Europe; the game opens one step in (bigger map, a little panning sideways).
 const ZOOMS = [1, 1.35, 1.8, 2.6], ZOOM_START = 1, ZOOM_BOX = 1.35;
+// On the website in a wide window (a computer) the game uses two columns: the map on the left, everything else on the right.
+const WIDE_Q = '(min-width: 900px) and (min-aspect-ratio: 5/4)';
+function wideLayout() { try { return !!window.GQ_WEB && window.matchMedia(WIDE_Q).matches; } catch (e) { return false; } }
 const byId = id => COUNTRIES.find(c => c.id === id);
 const byGeo = g => COUNTRIES.find(c => c.geo === g);
 function pointsFor(lvl, time) { return [0, 100, 150, 200][lvl] + time * 10; }
@@ -2916,6 +2925,7 @@ class Component extends DCLogic {
   qT(q) { return q && q.clues && q.clues.length ? 20 : this.T(); }
   componentDidMount() {
     loadExtra().then(() => this.forceUpdate());
+    try { if (window.GQ_WEB) window.matchMedia(WIDE_Q).addEventListener('change', () => { this.mapSeen = null; this.forceUpdate(); }); } catch (e) {}
     // A challenge link (goalquista.com/?sfida=ABCD) opens the join screen with the code filled in.
     try {
       const code = new URLSearchParams(location.search).get('sfida');
@@ -3085,7 +3095,7 @@ class Component extends DCLogic {
     const missions = ds ? ds.missions : dealMissions(), others = MISSIONS.map(m => m.id).filter(id => id !== missions.me && id !== missions.cpu).sort(() => Math.random() - 0.5);
     const mOffer = ds ? [missions.me, missions.me, missions.me] : [missions.me, others[0], others[1]].sort(() => Math.random() - 0.5);
     const extra = ds ? { daily: day, diff: 'pro' } : { diff: this.diff() };
-    this.setState({ screen: 'risk', tipsOn: !this.tipsDone(), rk: { G: { ...newGame(null, null, missions), goldOK: this.albumDone(), ...extra }, mOffer, mOpen: false, phase: 'mission', sel: null, zoom: ZOOM_START, note: '', target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null } });
+    this.setState({ screen: 'risk', tipsOn: !this.tipsDone(), rk: { G: { ...newGame(null, null, missions), goldOK: this.albumDone(), ...extra }, mOffer, mOpen: false, phase: 'mission', sel: null, zoom: wideLayout() ? 0 : ZOOM_START, note: '', target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null } });
     this.startTimer();
   }
   // Choosing a base is not free: a question on that territory decides it. Its level is the number of tanks you start with.
@@ -3426,7 +3436,7 @@ class Component extends DCLogic {
     const other = side === 'a' ? room.guest : room.host;
     let rk = {
       G: { ...newGame(null, null, { me: null, cpu: null }), goldOK: this.albumDone(), diff: 'pro' },
-      mOffer: (room.offers && room.offers[side]) || MISSIONS.slice(0, 3).map(x => x.id), mOpen: false, phase: 'mission', sel: null, zoom: ZOOM_START, note: '',
+      mOffer: (room.offers && room.offers[side]) || MISSIONS.slice(0, 3).map(x => x.id), mOpen: false, phase: 'mission', sel: null, zoom: wideLayout() ? 0 : ZOOM_START, note: '',
       target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null,
       mp: { side, code: this.mpCodeNow, name: mpCleanName(other && other.name) || '?', seq: 0, turn: 'a' }, mpLive: null, mpMove: null,
     };
@@ -3802,12 +3812,13 @@ class Component extends DCLogic {
       tipText, tipOk: () => { this.seenTip(); this.forceUpdate(); }, tipSkip: () => this.skipTips(),
       scoreAria: `Territories: you ${c.me}, rival ${c.cpu}, free ${c.free}.`, scoreMid: G.missions ? 'Territories' : `${MAJORITY} to win`,
       extraOn: !!G.extra,
-      rShowMap: phase !== 'ask', rIsMap: phase === 'map' || phase === 'place' || phase === 'gold' || phase === 'setup', rIsPlace: phase === 'place', rIsCpu: phase === 'cpu', rIsOver: phase === 'over', rIsAsk: phase === 'ask',
+      rShowMap: phase !== 'ask' || wideLayout(), rIsMap: phase === 'map' || phase === 'place' || phase === 'gold' || phase === 'setup', rIsPlace: phase === 'place', rIsCpu: phase === 'cpu', rIsOver: phase === 'over', rIsAsk: phase === 'ask',
       shapes, labels, labelGlyphs, troopTags, tanks, links, stars,
       mapViewBox: `0 0 ${MAP.W} ${MAP.H}`,
-      mapW: (100 * z) + '%',
-      // The map box grows with the zoom up to ZOOM_BOX, so the map uses the height of the screen; beyond that it scrolls.
-      mapBoxAspect: `${MAP.W} / ${Math.round(MAP.H * Math.min(z, ZOOM_BOX))}`,
+      // Phone: the map box grows with the zoom up to ZOOM_BOX and the map fills its width; beyond that it scrolls.
+      // Computer (website, wide window): the map sits on the left and fills the height of the window.
+      mapW: (100 * z) + '%', mapH: wideLayout() ? (100 * z) + '%' : 'auto',
+      mapBoxAspect: wideLayout() ? 'auto' : `${MAP.W} / ${Math.round(MAP.H * Math.min(z, ZOOM_BOX))}`, mapBoxHt: wideLayout() ? 'calc(100dvh - 104px)' : 'auto',
       mapRef: el => {
         // Each time the map appears, centre it on your territories (or on Europe, before you have any).
         if (el && el !== this.mapSeen) {

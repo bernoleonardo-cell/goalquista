@@ -36,11 +36,21 @@ rep('<div class="rk-felt" style="position:relative;height:874px;color:#f3ead2;ov
     '<div class="rk-felt" style="position:relative;height:100dvh;width:100%;max-width:480px;color:#f3ead2;overflow:hidden">')
 rep('body{margin:0;background:#cdbf9f;', 'body{margin:0;background:#0f2a1f;overscroll-behavior:none;')
 
+# On a computer (wide window) the game screen uses the whole width: the map on the left, filling the height,
+# and the scoreboard, questions and panels in a column on the right. Same query as WIDE_Q in the game.
+WIDE_CSS = ('@media (min-width: 900px) and (min-aspect-ratio: 5/4){'
+            '.rk-felt:has(.rk-risk){max-width:none!important}'
+            '.rk-risk{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;column-gap:24px;row-gap:12px!important;align-items:start;padding:20px 24px 28px!important}'
+            '.rk-colA,.rk-colB{display:flex!important;flex-direction:column;gap:12px;grid-column:2;min-width:0}'
+            '.rk-colA{grid-row:1}.rk-colB{grid-row:2}'
+            '.rk-mapcol{grid-column:1;grid-row:1/3;position:sticky;top:0;min-width:0}'
+            '.rk-mapcol>.rk-tip{position:absolute!important;top:14px;left:14px;right:66px;z-index:3}}')
+
 # Fonts served from the site itself (no requests to Google: simpler for privacy).
 FONTS = "".join(f"@font-face{{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url(fonts/alfa-slab-one-{sub}-400-normal.woff2) format('woff2');{rng}}}" for sub, rng in [('latin', ''), ('latin-ext', 'unicode-range:U+0100-02AF,U+1E00-1EFF;')])
 FONTS += "".join(f"@font-face{{font-family:Rubik;font-weight:{w};font-display:swap;src:url(fonts/rubik-{sub}-{w}-normal.woff2) format('woff2');{rng}}}" for w in (400, 500, 600, 700) for sub, rng in [('latin', ''), ('latin-ext', 'unicode-range:U+0100-02AF,U+1E00-1EFF;')])
 rep('<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Rubik:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><style>\n',
-    '<style>\n' + FONTS + '\n')
+    '<style>\n' + FONTS + '\n' + WIDE_CSS + '\n')
 # A link to the privacy and credits page, under the home screen.
 rep('<span style="font:500 12px/1.4 Rubik,sans-serif;color:#cfe0cc;opacity:.85">{{ t.updated }}</span>',
     '<span style="font:500 12px/1.4 Rubik,sans-serif;color:#cfe0cc;opacity:.85">{{ t.updated }}</span>\n    <a href="privacy.html" style="font:500 12px/1.4 Rubik,sans-serif;color:#e3b341">Privacy · Credits</a>')
@@ -80,7 +90,7 @@ head = f'''<meta charset="utf-8">
 <meta name="twitter:card" content="summary_large_image">
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
-<script>window.GQ_FB = {json.dumps(FIREBASE)}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
+<script>window.GQ_WEB = true; window.GQ_FB = {json.dumps(FIREBASE)}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
 <script src="./support.js"></script>'''
 rep('''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
