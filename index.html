@@ -19,6 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
+<script>window.GQ_FB = {"apiKey": "AIzaSyBVR0WimG-zXXZfTDm-X0hJc5ALGxo8RnA", "authDomain": "goalquista.firebaseapp.com", "databaseURL": "https://goalquista-default-rtdb.europe-west1.firebasedatabase.app", "projectId": "goalquista", "storageBucket": "goalquista.firebasestorage.app", "messagingSenderId": "193103757780", "appId": "1:193103757780:web:8c2d193ed117374fcd5641"}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -121,6 +122,12 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       <span style="font:500 17px/1 Rubik">{{ t.daily }}</span>
       <span style="font:500 12px/1.2 Rubik;color:#e3b341">{{ dailyHome }}</span>
     </button>
+    <sc-if value="{{ mpOk }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ mpOpen }}" style="width:100%;max-width:300px;min-height:58px;padding:8px 12px;border-radius:14px;border:1.5px solid #f3ead2;background:rgba(243,234,210,.1);color:#f3ead2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px">
+        <span style="font:500 17px/1 Rubik">🤝 {{ mpv.challenge }}</span>
+        <span style="font:500 12px/1.2 Rubik;color:#cfe0cc">{{ mpv.challengeSub }}</span>
+      </button>
+    </sc-if>
     <button onClick="{{ goAlbum }}" style="width:100%;max-width:300px;height:48px;border-radius:14px;border:1.5px solid {{ albumBtnBorder }};background:{{ albumBtnBg }};color:{{ albumBtnColor }};font:500 16px/1 Rubik">{{ albumBtn }}{{ albumCount }}</button>
     <span style="font:600 13px/1.4 Rubik,sans-serif;color:#e3b341">{{ careerLine }}</span>
     <span style="font:500 12px/1.4 Rubik,sans-serif;color:#cfe0cc;opacity:.85">{{ t.updated }}</span>
@@ -235,6 +242,50 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
 </div>
 </sc-if>
 
+<sc-if value="{{ isMp }}" hint-placeholder-val="{{ false }}">
+<div class="rk-screen" style="position:relative;height:100%;overflow-y:auto;padding:56px 16px 30px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+    <span style="font:400 26px/1.1 'Alfa Slab One',serif;color:#f3ead2">{{ mpv.title }}</span>
+    <button onClick="{{ mpv.back }}" style="border:1.5px solid rgba(243,234,210,.5);background:transparent;color:#f3ead2;border-radius:10px;padding:8px 12px;font:500 14px/1 Rubik">{{ t.homeBtn }}</button>
+  </div>
+  <sc-if value="{{ mpv.menu }}" hint-placeholder-val="{{ true }}">
+    <div class="rk-card" style="padding:16px;display:flex;flex-direction:column;gap:12px;color:#2a1d12">
+      <span style="font-size:15px;line-height:1.45;color:#4a3d2a;text-wrap:pretty">{{ mpv.intro }}</span>
+      <label style="display:flex;flex-direction:column;gap:6px;font:600 13px/1 Rubik;color:#4a3d2a">{{ mpv.nameLabel }}
+        <input type="text" value="{{ mpv.nameVal }}" onChange="{{ mpv.setName }}" placeholder="{{ mpv.namePh }}" style="height:46px;border-radius:10px;border:2px solid #2a1d12;background:#fffaf0;padding:0 12px;font:500 17px/1 Rubik;color:#2a1d12;box-sizing:border-box;width:100%">
+      </label>
+      <button class="rk-btn" onClick="{{ mpv.doCreate }}" style="height:52px">{{ mpv.create }}</button>
+      <div aria-hidden="true" style="height:1px;background:rgba(42,29,18,.2);margin:2px 0"></div>
+      <span style="font:600 13px/1 Rubik;color:#4a3d2a">{{ mpv.haveCode }}</span>
+      <div style="display:flex;gap:8px">
+        <input type="text" value="{{ mpv.codeVal }}" onChange="{{ mpv.setCode }}" aria-label="{{ mpv.codeLabel }}" placeholder="ABCD" style="flex:1;min-width:0;height:48px;border-radius:10px;border:2px solid #2a1d12;background:#fffaf0;text-align:center;letter-spacing:.3em;font:400 22px/1 'Alfa Slab One',serif;color:#2a1d12;box-sizing:border-box">
+        <button onClick="{{ mpv.doJoin }}" style="flex:1;height:48px;border-radius:12px;border:2px solid #2a1d12;background:transparent;color:#2a1d12;font:600 16px/1 Rubik">{{ mpv.join }}</button>
+      </div>
+      <sc-if value="{{ mpv.hasErr }}" hint-placeholder-val="{{ false }}">
+        <span role="alert" style="font:500 14px/1.4 Rubik;color:#8a2215">{{ mpv.errText }}</span>
+      </sc-if>
+    </div>
+  </sc-if>
+  <sc-if value="{{ mpv.busy }}" hint-placeholder-val="{{ false }}">
+    <div class="rk-card" role="status" style="padding:28px 16px;display:flex;flex-direction:column;gap:12px;align-items:center;color:#2a1d12">
+      <span aria-hidden="true" class="rk-ball" style="font-size:36px;line-height:1">⚽</span>
+      <span style="font:500 16px/1.3 Rubik">{{ mpv.busy_ }}</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{ mpv.lobby }}" hint-placeholder-val="{{ false }}">
+    <div class="rk-card" style="padding:18px 16px;display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;color:#2a1d12">
+      <span style="font:600 13px/1 Rubik;color:#6b5a3e">{{ mpv.codeLabel }}</span>
+      <span style="font:400 46px/1 'Alfa Slab One',serif;letter-spacing:.18em;padding-left:.18em;color:#2a1d12">{{ mpv.codeVal }}</span>
+      <span style="font-size:15px;line-height:1.45;color:#4a3d2a;text-wrap:pretty">{{ mpv.sendLink }}</span>
+      <span style="font:500 13px/1.35 Rubik;color:#1d3f99;overflow-wrap:anywhere">{{ mpv.link }}</span>
+      <button class="rk-btn" onClick="{{ mpv.doShare }}" style="width:100%;height:52px">{{ mpv.shareLabel }}</button>
+      <span role="status" style="display:flex;align-items:center;gap:8px;font:500 14px/1.3 Rubik;color:#4a3d2a"><span aria-hidden="true" class="rk-ball" style="font-size:18px;line-height:1">⚽</span>{{ mpv.waitingFriend }}</span>
+      <button onClick="{{ mpv.doCancel }}" style="border:0;background:transparent;color:#6b5a3e;font:500 14px/1 Rubik;padding:6px 0;text-decoration:underline">{{ mpv.cancel }}</button>
+    </div>
+  </sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isRisk }}" hint-placeholder-val="{{ false }}">
 <div class="rk-screen" style="position:relative;height:100%;overflow-y:auto;padding:56px 16px 30px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
 
@@ -250,7 +301,7 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     </div>
     <div role="img" aria-label="{{ scoreAria }}" style="display:flex;flex-direction:column;gap:5px">
       <div style="display:flex;justify-content:space-between;font:600 13px/1 Rubik;color:#f3ead2">
-        <span>{{ t.you }} {{ rMe }}</span><span style="color:#f0d48a">{{ scoreMid }}</span><span>{{ t.rival }} {{ rCpu }}</span>
+        <span>{{ t.you }} {{ rMe }}</span><span style="color:#f0d48a">{{ scoreMid }}</span><span>{{ rivalLabel }} {{ rCpu }}</span>
       </div>
       <div style="display:grid;grid-template-columns:repeat(21,minmax(0,1fr));gap:2px">
         <sc-for list="{{ scoreCells }}" as="c" hint-placeholder-count="21">
@@ -260,6 +311,9 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     </div>
   </div>
 
+  <sc-if value="{{ mpv.gone }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="border-radius:12px;padding:9px 12px;background:#b5372a;color:#f6eedb;font:500 14px/1.35 Rubik;box-shadow:0 3px 0 rgba(10,30,20,.45)">{{ mpv.goneText }}</div>
+  </sc-if>
   <sc-if value="{{ hasEvent }}" hint-placeholder-val="{{ false }}">
     <div role="status" style="border-radius:12px;padding:9px 12px;background:#e3b341;color:#2a1d12;font:500 14px/1.35 Rubik;box-shadow:0 3px 0 rgba(10,30,20,.45)">{{ eventText }}</div>
   </sc-if>
@@ -527,6 +581,28 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       </div>
       <span style="font-size:14px;line-height:1.4;color:#cfe0cc;text-align:center;max-width:300px">{{ t.rivalMission }}</span>
       <button class="rk-btn" onClick="{{ rMissionOk }}" style="height:54px;width:100%">{{ t.chooseBase }}</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ mpv.wait }}" hint-placeholder-val="{{ false }}">
+    <div class="rk-card" role="status" aria-live="polite" style="padding:16px;display:flex;flex-direction:column;gap:10px;color:#2a1d12;box-shadow:inset 0 0 0 4px #f6eedb,inset 0 0 0 5px #b5372a,0 5px 0 rgba(10,30,20,.45)">
+      <span style="display:flex;align-items:center;gap:8px;font:400 18px/1.15 'Alfa Slab One',serif;color:#8a2215"><span aria-hidden="true" class="rk-ball" style="font-size:18px;line-height:1">⚽</span>{{ mpv.head }}</span>
+      <span style="font-size:15px;line-height:1.45;color:#2a1d12;text-wrap:pretty">{{ mpv.sub }}</span>
+      <sc-if value="{{ mpv.hasNote }}" hint-placeholder-val="{{ false }}">
+        <span style="font:600 14px/1.4 Rubik;color:#1d3f99">{{ mpv.note }}</span>
+      </sc-if>
+      <sc-if value="{{ mpv.hasQ }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font:400 22px/1 'Alfa Slab One',serif;min-width:34px;color:#8a2215">{{ mpv.time }}</span>
+          <div style="flex:1;height:8px;border-radius:4px;background:rgba(42,29,18,.15);overflow:hidden"><div style="height:100%;width:{{ mpv.pct }};background:#b5372a;border-radius:4px;transition:width 1s linear"></div></div>
+        </div>
+        <span style="font:500 16px/1.35 Rubik;text-wrap:pretty">{{ mpv.qText }}</span>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ mpv.opts }}" as="o" hint-placeholder-count="4">
+            <span style="padding:10px 12px;border-radius:10px;background:{{ o.bg }};color:{{ o.color }};opacity:{{ o.op }};border:1.5px solid rgba(42,29,18,.25);font:500 15px/1.3 Rubik">{{ o.t }}</span>
+          </sc-for>
+        </div>
       </sc-if>
     </div>
   </sc-if>
@@ -2334,7 +2410,7 @@ function trUI(s) {
   return r;
 }
 // Walks the values handed to the page and puts every interface string into Italian.
-const UI_SKIP = new Set(['rQ', 'rOpts', 'rClues', 'cpuQText', 'cpuAns', 'stickerName', 'rStickerName', 'shapes', 'labels', 'labelGlyphs', 'langBtns', 'startLabel', 'tutTitle', 'tutText', 'tutNextLabel', 'tutCount', 'tutDots', 'troopTags', 'tanks', 'links', 'stars', 'scoreCells', 't']);
+const UI_SKIP = new Set(['rQ', 'rOpts', 'rClues', 'cpuQText', 'cpuAns', 'stickerName', 'rStickerName', 'shapes', 'labels', 'labelGlyphs', 'langBtns', 'startLabel', 'tutTitle', 'tutText', 'tutNextLabel', 'tutCount', 'tutDots', 'troopTags', 'tanks', 'links', 'stars', 'scoreCells', 't', 'mpv', 'rivalLabel']);
 function trVals(v, key) {
   if (typeof v === 'string') return trUI(v);
   if (Array.isArray(v)) return v.map(x => trVals(x));
@@ -2413,6 +2489,7 @@ function dealMissions(rand = Math.random) {
 // How far a side is with its mission: { done, text } for the progress line.
 // Missions can also ask for a total army: that check is added on top of the mission's own goal.
 function missionStatus(G, side, mid) {
+  if (!missionById(mid)) return { done: false, text: '' };   // online, before the other player has picked
   const m = missionById(mid), r = missionBase(G, side, m);
   if (!m.army || (!m.key && !m.chain && !m.count)) return r;
   const n = COUNTRIES.filter(c => G.own[c.id] === side).reduce((t, c) => t + G.troops[c.id], 0);
@@ -2498,7 +2575,7 @@ function counts(G) {
 }
 function targets(G, side) {
   const set = new Set(), shut = G.event && G.event.type === 'strike' ? G.event.id : null;
-  COUNTRIES.forEach(c => { if (G.own[c.id] === side) ADJ[c.id].forEach(n => { if (G.own[n] !== side && n !== shut) set.add(n); }); });
+  COUNTRIES.forEach(c => { if (G.own[c.id] === side) ADJ[c.id].forEach(n => { if (G.own[n] !== side && n !== shut && !(G.rwall && side === 'me' && G.own[n] === 'cpu')) set.add(n); }); });
   return COUNTRIES.map(c => c.id).filter(id => set.has(id));
 }
 // Returns [question, newGame]: an unused question of that level for that square; recycles once all are used.
@@ -2691,6 +2768,113 @@ const BOOM = Array.from({ length: 36 }, (_, i) => {
   const a = (i * 137.5) % 360 * Math.PI / 180, dist = 150 + (i * 53) % 190;
   return { ch: i % 9 === 4 ? '🏆' : i % 9 === 7 ? '🎉' : i % 9 === 1 ? '⭐' : '⚽', fs: 26 + (i * 7) % 30, dx: Math.round(Math.cos(a) * dist), dy: Math.round(Math.sin(a) * dist - 80), r: (i % 2 ? 1 : -1) * (180 + (i * 41) % 360), d: +((i % 3) * 0.28 + (i % 5) * 0.04).toFixed(2) };
 });
+// Online challenge: two friends, each on their own phone. Moves travel through Firebase Realtime Database.
+// Each phone plays its own turn with the usual engine and sends the board when the turn ends.
+// The board is stored from the host's side ('me' = host, 'cpu' = guest); the guest flips it on the way in and out.
+const MP_GRACE = 60;                // seconds a player may drop out before the other wins
+const MP_STALE = 25 * 3600 * 1000;  // rooms older than this are cleaned up
+const MP_ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+const MPT = {
+  it: {
+    challenge: 'Sfida un amico', challengeSub: 'Online, ognuno sul suo telefono', title: 'Sfida un amico',
+    intro: 'Giocate in due, ognuno sul suo telefono, con le stesse regole della partita contro il computer. Ognuno vede le domande nella sua lingua.',
+    nameLabel: 'Il tuo nome', namePh: 'Es. Leo', create: 'Crea la sfida', haveCode: 'Hai ricevuto un codice?', join: 'Entra',
+    busy: 'Collegamento…', codeLabel: 'Codice della sfida', sendLink: 'Manda questo link al tuo amico: appena entra, la partita comincia.',
+    shareBtn: 'Condividi il link', copied: 'Link copiato', waitingFriend: 'In attesa del tuo amico…', cancel: 'Annulla',
+    errName: 'Scrivi il tuo nome per iniziare.', errCode: 'Il codice ha 4 lettere.', errNoRoom: 'Nessuna sfida con questo codice. Controlla le lettere o chiedi un nuovo link.',
+    errFull: 'Questa sfida ha già due giocatori.', errNet: 'Connessione non riuscita. Controlla la rete e riprova.',
+    shareText: 'Ti sfido a Goalquista! Entra con il codice {c}:',
+    waitHead: 'Turno di {n}', waitPick: '{n} sta scegliendo la mossa…', waitBase: '{n} sta scegliendo la sua base…',
+    watchKick: '{n} vuole partire da {t}', watchAtk: '{n} attacca {t}, livello {l}', watchSave: '{n} prova a parare su {t}', timeUp: 'Tempo scaduto',
+    hostBase: '{n} parte da {t}. Ora scegli la tua base: non può confinare con la sua.', guestBase: '{n} parte da {t}. Si comincia: tocca a te.',
+    tooClose: 'Troppo vicino a {n}: scegli una base libera che non confina con la sua.', noAttack: '{n} non ha attaccato in questo turno.',
+    shotHead: 'Tiro nello specchio!', shotSub: '{t}: ora {n} deve parare. Il risultato arriva con la sua mossa.', shotSay: '{n} deve parare',
+    savedBy: '{n} ha parato: {t} resta sua.', saveHit: '{n} non para: {t} scende a {x}.', saveConq: '{n} non para: {t} è tua, con {x}.',
+    shotOn: '{n} tira su {t}', shotOnSub: 'Para con una domanda di livello 3',
+    extraNote: 'Turno extra: {n} aspetta, attacca ancora.', leaveAgain: 'Tocca ancora ✕ per lasciare la sfida', leaveSub: 'La vittoria andrà a {n}',
+    quitWin: '{n} ha lasciato la sfida: vinci tu.', goneText: '{n} si è disconnesso. Se non torna entro {s} secondi, vinci tu.',
+    goneWin: '{n} non è tornato: vittoria a tavolino.', lostForfeit: 'Sei rimasto disconnesso troppo a lungo: la vittoria va a {n}.',
+    tanks1: '1 carro', tanksN: '{x} carri', friendJoined: '{n} è entrato', kickOff: 'Calcio d’inizio!',
+  },
+  en: {
+    challenge: 'Challenge a friend', challengeSub: 'Online, each on their own phone', title: 'Challenge a friend',
+    intro: 'Two players, each on their own phone, with the same rules as a game against the computer. Each of you sees the questions in your own language.',
+    nameLabel: 'Your name', namePh: 'E.g. Leo', create: 'Create the challenge', haveCode: 'Got a code?', join: 'Join',
+    busy: 'Connecting…', codeLabel: 'Challenge code', sendLink: 'Send this link to your friend: the game starts as soon as they join.',
+    shareBtn: 'Share the link', copied: 'Link copied', waitingFriend: 'Waiting for your friend…', cancel: 'Cancel',
+    errName: 'Type your name to start.', errCode: 'The code has 4 letters.', errNoRoom: 'No challenge with this code. Check the letters or ask for a new link.',
+    errFull: 'This challenge already has two players.', errNet: 'Could not connect. Check your connection and try again.',
+    shareText: 'I challenge you to Goalquista! Join with code {c}:',
+    waitHead: '{n}’s turn', waitPick: '{n} is choosing a move…', waitBase: '{n} is choosing a base…',
+    watchKick: '{n} wants to kick off in {t}', watchAtk: '{n} attacks {t}, level {l}', watchSave: '{n} tries a save in {t}', timeUp: 'Time’s up',
+    hostBase: '{n} kicks off in {t}. Now pick your base: it cannot border theirs.', guestBase: '{n} kicks off in {t}. Game on: your turn.',
+    tooClose: 'Too close to {n}: pick a free base that does not border theirs.', noAttack: '{n} did not attack this turn.',
+    shotHead: 'On target!', shotSub: '{t}: now {n} must make a save. You will see the result with their move.', shotSay: '{n} must save it',
+    savedBy: '{n} saves it: {t} stays theirs.', saveHit: '{n} misses the save: {t} drops to {x}.', saveConq: '{n} misses the save: {t} is yours, with {x}.',
+    shotOn: '{n} shoots at {t}', shotOnSub: 'Save it with a level 3 question',
+    extraNote: 'Extra turn: {n} waits, attack again.', leaveAgain: 'Tap ✕ again to leave the challenge', leaveSub: '{n} will get the win',
+    quitWin: '{n} left the challenge: you win.', goneText: '{n} has disconnected. If they are not back within {s} seconds, you win.',
+    goneWin: '{n} did not come back: you win by forfeit.', lostForfeit: 'You were away too long: the win goes to {n}.',
+    tanks1: '1 tank', tanksN: '{x} tanks', friendJoined: '{n} has joined', kickOff: 'Kick off!',
+  },
+};
+// The website sets window.GQ_FB (the Firebase project) and GQ_FB_SDK (the SDK files, loaded only when a challenge starts).
+function mpAvail() { try { return typeof window !== 'undefined' && !!window.GQ_FB; } catch (e) { return false; } }
+function mpLoadSdk() {
+  if (typeof firebase !== 'undefined' && firebase.database) return Promise.resolve();
+  return (window.GQ_FB_SDK || []).reduce((p, src) => p.then(() => new Promise((ok, ko) => {
+    const el = document.createElement('script'); el.src = src; el.onload = ok; el.onerror = ko; document.head.appendChild(el);
+  })), Promise.resolve());
+}
+let MP_NET = null;
+// Signs in anonymously once per visit: the database rules only let the two players of a room write to it.
+function mpNet() {
+  if (!MP_NET) MP_NET = (async () => {
+    await mpLoadSdk();
+    if (!firebase.apps.length) firebase.initializeApp(window.GQ_FB);
+    const auth = firebase.auth();
+    if (!auth.currentUser) await auth.signInAnonymously();
+    return { db: firebase.database(), uid: auth.currentUser.uid };
+  })().catch(e => { MP_NET = null; throw e; });
+  return MP_NET;
+}
+// Online, your base must be free and must not border the other player's.
+const mpBlocked = (G, id) => G.own[id] !== null || ADJ[id].some(n => G.own[n] === 'cpu');
+const mpOther = side => side === 'a' ? 'b' : 'a';
+const mpFlipO = o => o === 'me' ? 'cpu' : o === 'cpu' ? 'me' : null;
+const mpCode = () => Array.from({ length: 4 }, () => MP_ABC[Math.floor(Math.random() * MP_ABC.length)]).join('');
+const mpCleanName = s => String(s || '').replace(/[\u0000-\u001f<>{}]/g, '').trim().slice(0, 20);
+// The shared part of the board, as one side sends it. Firebase drops empty values, so free territories are left out.
+function mpPack(G, flip) {
+  const f = flip ? mpFlipO : (o => o || null), own = {}, troops = {}, m = G.missions || {};
+  COUNTRIES.forEach(c => { const o = f(G.own[c.id]); if (o) own[c.id] = o; troops[c.id] = G.troops[c.id] || 0; });
+  return {
+    own, troops, round: G.round,
+    myPts: (flip ? G.cpuPts : G.myPts) || 0, cpuPts: (flip ? G.myPts : G.cpuPts) || 0,
+    missions: { me: (flip ? m.cpu : m.me) || '', cpu: (flip ? m.me : m.cpu) || '' },
+    last: f(G.last) || '', event: G.event || null, wall: G.wall ? f('me') : '',
+  };
+}
+function mpUnpack(S, flip) {
+  const f = flip ? mpFlipO : (o => o || null), own = {}, troops = {}, m = (S && S.missions) || {};
+  COUNTRIES.forEach(c => { own[c.id] = f(((S && S.own) || {})[c.id] || null); troops[c.id] = ((S && S.troops) || {})[c.id] || 0; });
+  return {
+    own, troops, round: (S && S.round) || 1,
+    myPts: (flip ? S.cpuPts : S.myPts) || 0, cpuPts: (flip ? S.myPts : S.cpuPts) || 0,
+    missions: { me: (flip ? m.cpu : m.me) || null, cpu: (flip ? m.me : m.cpu) || null },
+    last: f(S.last || null), event: S.event || null,
+    // Catenaccio: the territories of whoever played it cannot be attacked in the other player's next turn.
+    rwall: f(S.wall || null) === 'cpu',
+  };
+}
+// What a player did on their turn, in a form both phones read the same way.
+function mpMovePack(mv) {
+  if (!mv) return null;
+  const o = mv.out || {};
+  return { id: mv.id, lvl: mv.lvl, key: mv.key || '', ans: mv.ans ?? -1, ok: !!mv.ok, kind: o.kind || '', bonus: o.bonus || 0, troops: o.troops || 0, prev: o.before || 0, bo: (mv.before && mv.before.own) || '', bt: (mv.before && mv.before.troops) || 0 };
+}
+const mpFindQ = (terr, key) => (RQ[terr] || []).find(q => qKey(q) === key) || null;
+
 class Component extends DCLogic {
   state = { screen: this.props.startScreen ?? 'home', rk: null, callout: null, tipsOn: true, tipsSeen: [] };
   // First-game tips: one at a time, shown over the thing they explain. Remembered on this device once done.
@@ -2731,6 +2915,11 @@ class Component extends DCLogic {
   qT(q) { return q && q.clues && q.clues.length ? 20 : this.T(); }
   componentDidMount() {
     loadExtra().then(() => this.forceUpdate());
+    // A challenge link (goalquista.com/?sfida=ABCD) opens the join screen with the code filled in.
+    try {
+      const code = new URLSearchParams(location.search).get('sfida');
+      if (code && mpAvail()) { history.replaceState(null, '', location.pathname); this.mpOpen(code.toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4)); }
+    } catch (e) {}
     if (this.state.screen === 'risk') this.startRisk();
     try { this._tapH = e => this.tapSound(e); document.addEventListener('pointerdown', this._tapH, true); } catch (e) {}
   }
@@ -2751,13 +2940,17 @@ class Component extends DCLogic {
     this.setState({ callout: { id, kind, text, sub: sub || '' } });
     this.ct = setTimeout(() => this.setState({ callout: null }), 1800);
   }
-  rOver(G) {
-    const w = winner(G);
+  rOver(G, patch = {}) {
+    const rk0 = this.state.rk, mpOn = !!(rk0 && rk0.mp);
+    // Online: tell the other phone the game is over (unless the news came from there).
+    if (mpOn && !patch.mpNoPush) patch = { ...patch, mp: this.mpPush(patch.mpKind || 'over', G, { turn: rk0.mp.side }) };
+    const w = patch.mpWin || winner(G);
     if (G.daily) this.saveDaily({ day: G.daily, won: w === 'me', round: Math.min(G.round, MAX_ROUNDS), pts: G.myPts });
     this.sfx(w === 'me' ? 'fanfare' : 'groan');
     const careerGain = this.state.rk && this.state.rk.careerGain ? this.state.rk.careerGain : this.addCareer(G.myPts);
-    this.setState({ rk: { ...this.state.rk, G, phase: 'over', sel: null, careerGain } });
+    this.setState({ rk: { ...this.state.rk, ...patch, G, phase: 'over', sel: null, careerGain, mpDone: mpOn } });
     this.say(w === 'me' ? 'good' : w === 'cpu' ? 'bad' : 'neutral', 'Full time!', w === 'me' ? 'Europe is yours' : w === 'cpu' ? 'Your rival takes Europe' : 'Honours even');
+    if (mpOn) this.mpFinish();
   }
   startTimer() {
     clearInterval(this.iv);
@@ -2766,6 +2959,7 @@ class Component extends DCLogic {
       if (s.screen === 'risk' && s.rk && s.rk.phase === 'ask' && s.rk.picked === null) {
         if (s.rk.time <= 1) this.rPick(-1); else this.setState({ rk: { ...s.rk, time: s.rk.time - 1 } });
       }
+      if (s.rk && s.rk.mp) this.mpTick();
     }, 1000);
   }
 
@@ -2897,11 +3091,13 @@ class Component extends DCLogic {
   rStartAt(id, lvl = 3) {
     this.seenTip();
     const rk = this.state.rk; if (!rk || rk.phase !== 'setup') return;
+    if (rk.mp && mpBlocked(rk.G, id)) return this.setState({ rk: { ...rk, note: this.mpT('tooClose', { n: rk.mp.name }) } });
     const [q, G] = nextQ(rk.G, id, lvl, Math.random, this.seenQ());
     this.markSeen(q);
     this.setState({ rk: { ...rk, G, phase: 'ask', kick: true, target: id, lvl, q, picked: null, out: null, dealt: null, chosen: null, time: this.qT(q) } });
   }
   rKickOff(id, G) {
+    if (this.state.rk.mp) return this.mpKickOff(id, G);
     this.sfx('whistle');
     const cpu = chooseCpuBase(id);
     const lvl = this.state.rk.lvl || START_TROOPS, cpuLvl = 1 + Math.floor(Math.random() * 3), NG = newGame(id, cpu, G.missions);
@@ -2964,23 +3160,27 @@ class Component extends DCLogic {
     if (rk.defend) {
       // Your save decides the rival's attack: right answer, the shot is saved; wrong, the rival scores.
       const d = rk.defend, [G2a, out] = attack(rk.G, 'cpu', d.id, d.lvl, !ok);
-      const G2 = { ...G2a, myPts: G2a.myPts + (ok ? pointsFor(3, rk.time) : 0), cpuPts: (G2a.cpuPts || 0) + (ok ? 0 : pointsFor(d.lvl, 5)) };
+      const G2 = { ...G2a, myPts: G2a.myPts + (ok ? pointsFor(3, rk.time) : 0), cpuPts: (G2a.cpuPts || 0) + (ok || rk.mp ? 0 : pointsFor(d.lvl, 5)) };
       this.setState({ rk: { ...rk, G: G2, picked: i, ok, out: { ...out, save: true }, time: i === -1 ? 0 : rk.time } });
       const nm = byId(d.id).name;
       if (ok) this.sfx('cheer', d.id); else this.sfx('groan');
       return ok ? this.say('good', 'What a save!', out.bonus ? `+${soldiers(out.bonus)} in ${nm}` : `${nm} holds`) : this.say('bad', i === -1 ? 'Too slow!' : 'Goal for the rival', out.kind === 'hit' ? `You lose ${soldiers(d.lvl)} in ${nm}` : `${nm} goes to the rival`);
     }
-    const [G, out] = attack(rk.G, 'me', rk.target, rk.lvl, ok);
+    let [G, out] = attack(rk.G, 'me', rk.target, rk.lvl, ok);
+    // Online, a right answer on the other player's territory is a shot: they get a question to save it.
+    if (rk.mp && ok && rk.G.own[rk.target] === 'cpu') { G = { ...rk.G, streak: G.streak, deal: G.deal, last: G.last }; out = { kind: 'shot', card: out.card }; }
     G.myPts = rk.G.myPts + (ok ? pointsFor(rk.lvl, rk.time) : 0);
+    const mpMove = rk.mp ? { id: rk.target, lvl: rk.lvl, key: qKey(rk.q), ans: i, ok, out, before: { own: rk.G.own[rk.target], troops: rk.G.troops[rk.target] } } : null;
     // Home stadium: a completed album page gives +1 tank when you take that territory.
     if (ok && (out.kind === 'take' || out.kind === 'conquer') && this.homes().includes(rk.target)) { G.troops = { ...G.troops, [rk.target]: G.troops[rk.target] + 1 }; out.home = true; out.troops += 1; }
     const sticker = ok ? earnSticker(this.album(), rk.target, rk.lvl) : null;
     if (sticker) this.addSticker(sticker.name);
-    this.setState({ rk: { ...rk, G, picked: i, ok, out, sticker, preG: rk.G, time: i === -1 ? 0 : rk.time } });
+    this.setState({ rk: { ...rk, G, picked: i, ok, out, sticker, preG: rk.G, time: i === -1 ? 0 : rk.time, mpMove: mpMove || rk.mpMove } });
     if (ok) this.sfx('cheer', rk.target); else this.sfx('groan');
     if (sticker) this.checkAlbumDone();
     const nm = byId(rk.target).name;
     if (out.card) this.say('good', 'Hat-trick!', 'Pick a legend');
+    else if (out.kind === 'shot') this.say('good', this.mpT('shotHead'), this.mpT('shotSay', { n: rk.mp.name }));
     else if (out.kind === 'miss') this.say('bad', i === -1 ? 'Time’s up!' : 'Off the post!', out.bonus ? `Rival gains ${soldiers(out.bonus)} in ${nm}` : `${nm} holds out`);
     else if (out.kind === 'take') this.say('good', 'Back of the net!', `${nm} is yours`);
     else if (out.kind === 'hit') this.say('good', 'Big hit!', `${nm} loses ${soldiers(rk.lvl)}`);
@@ -2994,7 +3194,7 @@ class Component extends DCLogic {
       if (rk.ok) return this.rKickOff(rk.target, G);
       return this.setState({ rk: { ...rk, phase: 'setup', kick: false, sel: null, target: null, q: null, picked: null, out: null, note: `No base in ${byId(rk.target).name} this time.` } });
     }
-    if (rk.defend) return this.rEndRound(G);
+    if (rk.defend) return rk.mp ? this.mpAfterSave(G) : this.rEndRound(G);
     if (isOver(G)) return this.rOver(G);
     if (G.toPlace > 0) return this.setState({ rk: { ...rk, phase: 'place', sel: null, note: '' } });
     if (G.gold) return this.setState({ rk: { ...rk, phase: 'gold', sel: null, note: '' } });
@@ -3045,6 +3245,13 @@ class Component extends DCLogic {
     return { gain: Math.max(0, pts), total, rank: r1.name, up: r1.at > r0.at, pack, next: RANKS.find(x => x.at > total) || null };
   }
   rAfterMyTurn(G) {
+    const rk0 = this.state.rk;
+    if (rk0.mp) {
+      if (isOver(G)) return this.rOver(G);
+      const shot = rk0.mpMove && rk0.mpMove.out && rk0.mpMove.out.kind === 'shot';
+      if (G.extra && !shot) { this.say('good', 'Extra turn!', 'The rival waits'); return this.setState({ rk: { ...rk0, G: { ...G, extra: false }, phase: 'map', note: this.mpT('extraNote', { n: rk0.mp.name }), hide: [], sticker: null, target: null, picked: null, out: null, sel: null } }); }
+      return this.mpEndTurn(G);
+    }
     if (isOver(G)) return this.rOver(G);
     if (G.extra) { this.say('good', 'Extra turn!', 'The rival waits'); return this.rEndRound({ ...G, extra: false }, 'Extra turn: the rival waits, attack again.'); }
     this.rCpuTurn(G);
@@ -3057,6 +3264,7 @@ class Component extends DCLogic {
   }
   rMissionOk() {
     const rk = this.state.rk; if (!rk || rk.phase !== 'mission' || !rk.mOpen) return;
+    if (rk.mp) return this.mpAfterMission();
     if (!rk.G.daily) return this.setState({ rk: { ...rk, phase: 'setup' } });
     // Daily challenge: the bases are set for the day, 2 tanks each, no kick-off question.
     const ds = dailySetup(rk.G.daily), NG = newGame(ds.me, ds.cpu, rk.G.missions);
@@ -3069,7 +3277,7 @@ class Component extends DCLogic {
     this.setState({ rk: { ...rk, mOpen: true, G: { ...rk.G, missions: { ...rk.G.missions, me: rk.mOffer[i] } } } });
   }
   rToggleMission() { const rk = this.state.rk; if (rk) this.setState({ rk: { ...rk, showMission: !rk.showMission } }); }
-  rSkip() { this.seenTip(); this.rCpuTurn(this.state.rk.G); }
+  rSkip() { this.seenTip(); const rk = this.state.rk; if (rk.mp) return this.mpEndTurn(rk.G); this.rCpuTurn(rk.G); }
   rCpuTurn(G) {
     const rk = this.state.rk;
     if (isOver(G)) return this.rOver(G);
@@ -3101,12 +3309,326 @@ class Component extends DCLogic {
       else this.say('bad', 'Fallen!', `${nm} goes to the rival`);
     } else if (out.kind !== 'miss') this.say('neutral', 'Rival on the move', `${nm} taken`);
   }
-  rCpuGo() { this.seenTip(); this.rEndRound(this.state.rk.G); }
+  rCpuGo() { this.seenTip(); const rk = this.state.rk; if (rk.mp) return this.setState({ rk: { ...rk, phase: 'map', cpu: null, note: '' } }); this.rEndRound(rk.G); }
   rEndRound(G, note) {
     const rk = this.state.rk; let G2 = { ...G, round: G.round + 1, event: null };
     if (isOver(G2)) return this.rOver(G2);
     if (G2.round % EVENT_EVERY === 0) { const [G3, ev] = rollEvent(G2); G2 = G3; this.say('neutral', `${ev.icon} ${ev.title}`, ev.text); this.sfx('whistle'); }
     this.setState({ rk: { ...rk, G: G2, phase: 'map', note: note || '', cpu: null, defend: null, hide: [], sticker: null, target: null, picked: null, out: null, sel: null } });
+  }
+
+  // ===== Online challenge =====
+  mpT(k, vars = {}) {
+    let s = (MPT[this.lang()] || MPT.it)[k] ?? MPT.en[k] ?? k;
+    Object.keys(vars).forEach(v => { s = s.split('{' + v + '}').join(vars[v]); });
+    return s;
+  }
+  mpTerr(id) { const n = byId(id).name; return this.lang() === 'it' ? (TERR_IT[n] || n) : n; }
+  mpTanks(x) { return x === 1 ? this.mpT('tanks1') : this.mpT('tanksN', { x }); }
+  mpRef(p) { return this.mpDb.ref('rooms/' + this.mpCodeNow + (p ? '/' + p : '')); }
+  mpName() { let n = ''; try { n = localStorage.getItem('fr-name') || ''; } catch (e) {} return n; }
+  mpOpen(code = '') {
+    clearInterval(this.iv);
+    this.mpDetach();
+    this.setState({ screen: 'mp', rk: null, mpM: { step: 'menu', name: this.mpName(), code, err: '' } });
+  }
+  mpSetErr(err) { this.setState({ mpM: { ...this.state.mpM, step: 'menu', err } }); }
+  // Old rooms are removed by whoever opens a new one (the database rules allow deleting only rooms older than a day).
+  mpCleanup(net) {
+    try {
+      net.db.ref('rooms').orderByChild('created').endAt(Date.now() - MP_STALE).once('value')
+        .then(s => { s.forEach(c => { c.ref.remove().catch(() => {}); }); }).catch(() => {});
+    } catch (e) {}
+  }
+  async mpCreate() {
+    const m = this.state.mpM, name = mpCleanName(m.name);
+    if (!name) return this.mpSetErr('errName');
+    try { localStorage.setItem('fr-name', name); } catch (e) {}
+    this.setState({ mpM: { ...m, name, step: 'busy', err: '' } });
+    try {
+      const net = await mpNet();
+      this.mpDb = net.db; this.mpUid = net.uid;
+      this.mpCleanup(net);
+      const ids = MISSIONS.map(x => x.id).sort(() => Math.random() - 0.5);
+      const room = { created: firebase.database.ServerValue.TIMESTAMP, host: { uid: net.uid, name }, offers: { a: ids.slice(0, 3), b: ids.slice(3, 6) } };
+      let code = null;
+      for (let i = 0; i < 8 && !code; i++) {
+        const c = mpCode();
+        try { await net.db.ref('rooms/' + c).set(room); code = c; } catch (e) { if (i === 7) throw e; }
+      }
+      this.mpCodeNow = code; this.mpSide = 'a'; this.mpRoom = { ...room, created: Date.now() };
+      this.setState({ mpM: { ...this.state.mpM, step: 'lobby', code, copied: false } });
+      this.mpPresence();
+      const r = this.mpRef('guest'), cb = s => { const g = s.val(); if (g && g.name) this.mpBegin('a', { ...this.mpRoom, guest: g }); };
+      r.on('value', cb);
+      this.mpSubs = [() => r.off('value', cb)];
+    } catch (e) { this.mpSetErr('errNet'); }
+  }
+  async mpJoin() {
+    const m = this.state.mpM, name = mpCleanName(m.name), code = String(m.code || '').toUpperCase().replace(/[^A-Z]/g, '');
+    if (!name) return this.mpSetErr('errName');
+    if (code.length !== 4) return this.mpSetErr('errCode');
+    try { localStorage.setItem('fr-name', name); } catch (e) {}
+    this.setState({ mpM: { ...m, name, code, step: 'busy', err: '' } });
+    try {
+      const net = await mpNet();
+      this.mpDb = net.db; this.mpUid = net.uid;
+      const room = (await net.db.ref('rooms/' + code).once('value')).val();
+      if (!room || !room.host) return this.mpSetErr('errNoRoom');
+      this.mpCodeNow = code;
+      // Back in a challenge you had already joined (a reload, a dropped connection): pick up where it was.
+      if (room.host.uid === net.uid) {
+        this.mpSide = 'a'; this.mpRoom = room;
+        if (room.guest) return this.mpBegin('a', room);
+        this.setState({ mpM: { ...this.state.mpM, step: 'lobby', code } });
+        this.mpPresence();
+        const r = this.mpRef('guest'), cb = s => { const g = s.val(); if (g && g.name) this.mpBegin('a', { ...room, guest: g }); };
+        r.on('value', cb); this.mpSubs = [() => r.off('value', cb)];
+        return;
+      }
+      if (room.guest && room.guest.uid !== net.uid) return this.mpSetErr('errFull');
+      if (!room.guest) { const guest = { uid: net.uid, name }; await net.db.ref('rooms/' + code + '/guest').set(guest); room.guest = guest; }
+      this.mpSide = 'b'; this.mpRoom = room;
+      this.mpBegin('b', room);
+    } catch (e) { this.mpSetErr('errNet'); }
+  }
+  mpShare() {
+    const m = this.state.mpM; if (!m || !m.code) return;
+    const link = this.mpLink(m.code), text = this.mpT('shareText', { c: m.code });
+    const copied = () => this.setState({ mpM: { ...this.state.mpM, copied: true } });
+    try {
+      if (navigator.share) return navigator.share({ title: 'Goalquista', text, url: link }).catch(() => {});
+      navigator.clipboard.writeText(text + ' ' + link).then(copied, copied);
+    } catch (e) {}
+  }
+  mpLink(code) { try { return location.origin + location.pathname + '?sfida=' + code; } catch (e) { return '?sfida=' + code; } }
+  mpCancel() {
+    const m = this.state.mpM;
+    if (m && m.step === 'lobby' && this.mpDb && this.mpSide === 'a') { try { this.mpRef('').remove().catch(() => {}); } catch (e) {} }
+    this.mpDetach();
+    this.setState({ mpM: { ...m, step: 'menu', code: '', err: '' } });
+  }
+  mpPresence() {
+    try { const me = this.mpRef('on/' + this.mpSide); me.onDisconnect().remove(); me.set(true); this.mpMe = me; } catch (e) {}
+  }
+  mpDetach() {
+    (this.mpSubs || []).forEach(f => { try { f(); } catch (e) {} });
+    this.mpSubs = [];
+    if (this.mpMe) { try { this.mpMe.onDisconnect().cancel(); this.mpMe.remove(); } catch (e) {} this.mpMe = null; }
+    this.mpGoneAt = null; this.mpSeenOther = false; this.mpStarted = false; this.mpLiveSent = '';
+  }
+  async mpBegin(side, room) {
+    if (this.mpStarted) return;
+    this.mpStarted = true;
+    this.mpDetach(); this.mpStarted = true;
+    if (!EXTRA_READY) await loadExtra();
+    const other = side === 'a' ? room.guest : room.host;
+    let rk = {
+      G: { ...newGame(null, null, { me: null, cpu: null }), goldOK: this.albumDone(), diff: 'pro' },
+      mOffer: (room.offers && room.offers[side]) || MISSIONS.slice(0, 3).map(x => x.id), mOpen: false, phase: 'mission', sel: null, zoom: 0, note: '',
+      target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null,
+      mp: { side, code: this.mpCodeNow, name: mpCleanName(other && other.name) || '?', seq: 0, turn: 'a' }, mpLive: null, mpMove: null,
+    };
+    if (room.state) rk = this.mpRestore(rk, room.state);
+    clearInterval(this.iv);
+    this.shownTip = null;
+    this.setState({ screen: 'risk', tipsOn: !this.tipsDone(), rk, mpM: null });
+    if (side === 'a' && !room.state) this.say('good', this.mpT('friendJoined', { n: rk.mp.name }), this.mpT('title'));
+    this.startTimer();
+    this.mpListen();
+  }
+  // Rebuilds a game in progress from the last move stored in the room.
+  mpRestore(rk, S) {
+    const side = rk.mp.side, R = mpUnpack(S.G, side === 'b');
+    const mp = { ...rk.mp, seq: S.seq || 0, turn: S.turn || 'a' };
+    const G = { ...rk.G, ...R };
+    if (['over', 'quit', 'forfeit'].includes(S.kind)) {
+      const mpWin = S.kind === 'over' ? null : (S.by === side) === (S.kind === 'forfeit') ? 'me' : 'cpu';
+      return { ...rk, G, mp, phase: 'over', mpWin, mpDone: true };
+    }
+    if (!G.missions.me) return { ...rk, G, mp };
+    const hasBase = COUNTRIES.some(c => G.own[c.id] === 'me');
+    if (mp.turn !== side) return { ...rk, G, mp, mOpen: true, phase: 'wait' };
+    if (!hasBase) return { ...rk, G, mp, mOpen: true, phase: 'setup' };
+    if (S.kind === 'shot' && S.by !== side && S.move) {
+      const [dq, G1] = nextQ(G, S.move.id, 3, Math.random, this.seenQ());
+      return { ...rk, G: G1, mp, mOpen: true, phase: 'ask', defend: { id: S.move.id, lvl: S.move.lvl, before: { own: 'me', troops: G.troops[S.move.id] } }, target: S.move.id, lvl: S.move.lvl, q: dq, hide: [], time: this.qT(dq) };
+    }
+    return { ...rk, G, mp, mOpen: true, phase: 'map' };
+  }
+  mpListen() {
+    const subs = [], sub = (p, fn) => { const r = this.mpRef(p), cb = s => fn(s.val()); r.on('value', cb, () => {}); subs.push(() => r.off('value', cb)); };
+    sub('state', S => this.mpOnState(S));
+    sub('live', L => this.mpOnLive(L));
+    sub('on', O => this.mpOnPresence(O));
+    this.mpSubs = subs;
+    this.mpPresence();
+  }
+  // Sends the board and what happened; returns the new connection record for the game state.
+  mpPush(kind, G, o = {}) {
+    const mp = this.state.rk.mp, seq = (mp.seq || 0) + 1, turn = o.turn || mp.side;
+    const S = { seq, by: mp.side, kind, turn, G: mpPack(G, mp.side === 'b'), at: firebase.database.ServerValue.TIMESTAMP };
+    const move = mpMovePack(o.move); if (move) S.move = move;
+    try { this.mpRef('state').set(S).catch(() => {}); this.mpRef('live').remove().catch(() => {}); } catch (e) {}
+    this.mpLiveSent = 'null';
+    return { ...mp, seq, turn };
+  }
+  // The other phone's board, with this phone's private details (cards in hand, questions seen, help used) kept.
+  mpMerge(S) {
+    const rk = this.state.rk, R = mpUnpack(S.G, rk.mp.side === 'b'), mine = rk.G.missions && rk.G.missions.me;
+    return { ...rk.G, ...R, missions: { me: mine || R.missions.me, cpu: R.missions.cpu }, wall: false };
+  }
+  mpOnState(S) {
+    const rk = this.state.rk;
+    if (!S || !rk || !rk.mp || rk.phase === 'over' || S.by === rk.mp.side || (S.seq || 0) <= (rk.mp.seq || 0)) return;
+    const mp = { ...rk.mp, seq: S.seq, turn: S.turn }, G = this.mpMerge(S), n = mp.name, mv = S.move || null;
+    const reset = { sel: null, target: null, q: null, picked: null, out: null, hide: [], sticker: null, dealt: null, chosen: null, mpLive: null, mpNote: '' };
+    if (S.kind === 'quit') return this.rOver(G, { mp, mpWin: 'me', mpNoPush: true, mpEnd: this.mpT('quitWin', { n }) });
+    if (S.kind === 'forfeit') return this.rOver(G, { mp, mpWin: 'cpu', mpNoPush: true, mpEnd: this.mpT('lostForfeit', { n }) });
+    if (S.kind === 'over') return this.rOver(G, { mp, mpNoPush: true, ...reset });
+    if (S.kind === 'base') {
+      const id = COUNTRIES.map(c => c.id).find(x => G.own[x] === 'cpu'), t = id ? this.mpTerr(id) : '';
+      if (mp.side === 'b') return this.setState({ rk: { ...rk, ...reset, G, mp, phase: rk.phase === 'wait' ? 'setup' : rk.phase, note: this.mpT('hostBase', { n, t }) } });
+      this.sfx('whistle');
+      this.say('neutral', this.mpT('kickOff'), this.mpT('guestBase', { n, t }));
+      return this.setState({ rk: { ...rk, ...reset, G, mp, phase: 'map', note: this.mpT('guestBase', { n, t }) } });
+    }
+    if (S.kind === 'shot' && mv) {
+      // A right answer on one of your territories: you get a level 3 question to save it, then your own turn.
+      const [dq, G1] = nextQ(G, mv.id, 3, Math.random, this.seenQ());
+      this.markSeen(dq);
+      this.say('bad', this.mpT('shotOn', { n, t: this.mpTerr(mv.id) }), this.mpT('shotOnSub'));
+      return this.setState({ rk: { ...rk, ...reset, G: G1, mp, phase: 'ask', kick: false, cpu: null, mpMove: null, defend: { id: mv.id, lvl: mv.lvl, before: { own: 'me', troops: G.troops[mv.id] } }, target: mv.id, lvl: mv.lvl, q: dq, time: this.qT(dq) } });
+    }
+    if (S.kind === 'save' && mv) {
+      const t = this.mpTerr(mv.id), x = this.mpTanks(mv.troops);
+      const note = mv.kind === 'miss' ? this.mpT('savedBy', { n, t }) : mv.kind === 'hit' ? this.mpT('saveHit', { n, t, x }) : this.mpT('saveConq', { n, t, x });
+      if (mv.kind === 'miss') { this.sfx('groan'); this.say('bad', this.mpT('savedBy', { n, t }), ''); } else { this.sfx('cheer', mv.id); this.say('good', note, ''); }
+      return this.setState({ rk: { ...rk, G, mp, mpNote: note } });
+    }
+    // The other player's turn is over: show their move, then it is yours.
+    let cpu = { none: true, msg: this.mpT('noAttack', { n }) };
+    if (mv && mv.id) {
+      const q = mpFindQ(mv.id, mv.key);
+      cpu = { id: mv.id, lvl: mv.lvl, q, ans: mv.ans, ok: mv.ok, out: { kind: mv.kind, bonus: mv.bonus, troops: mv.troops, before: mv.prev }, before: { own: mpFlipO(mv.bo || null), troops: mv.bt } };
+      const nm = byId(mv.id).name;
+      if (cpu.before.own === 'me') {
+        if (mv.kind === 'miss') this.say('good', 'Saved!', mv.bonus ? `You gain ${soldiers(mv.bonus)} in ${nm}` : `${nm} holds`);
+        else if (mv.kind === 'hit') this.say('bad', 'Under attack!', `You lose ${soldiers(mv.lvl)} in ${nm}`);
+        else this.say('bad', 'Fallen!', `${nm} goes to the rival`);
+      } else if (mv.kind !== 'miss') this.say('neutral', 'Rival on the move', `${nm} taken`);
+    }
+    if (G.event && G.event.title !== (rk.G.event && rk.G.event.title)) { this.say('neutral', `${G.event.icon} ${G.event.title}`, G.event.text); this.sfx('whistle'); }
+    this.setState({ rk: { ...rk, ...reset, G, mp, phase: 'cpu', cpu, defend: null } });
+  }
+  mpOnLive(L) {
+    const rk = this.state.rk; if (!rk || !rk.mp) return;
+    this.setState({ rk: { ...rk, mpLive: L && L.by !== rk.mp.side ? L : null } });
+  }
+  mpOnPresence(O) {
+    const rk = this.state.rk; if (!rk || !rk.mp) return;
+    const here = !!(O && O[mpOther(rk.mp.side)]);
+    if (here) { this.mpSeenOther = true; this.mpGoneAt = null; }
+    else if (this.mpSeenOther && !this.mpGoneAt && rk.phase !== 'over') this.mpGoneAt = Date.now();
+    this.forceUpdate();
+  }
+  // Called every second: a player away for more than a minute loses the game.
+  mpTick() {
+    const rk = this.state.rk; if (!rk || !rk.mp || !this.mpGoneAt || rk.phase === 'over') return;
+    if (Date.now() - this.mpGoneAt >= MP_GRACE * 1000) { this.mpGoneAt = null; return this.rOver(rk.G, { mpWin: 'me', mpKind: 'forfeit', mpEnd: this.mpT('goneWin', { n: rk.mp.name }) }); }
+    this.forceUpdate();
+  }
+  // While you answer, the other phone sees your question, your clock and your answer.
+  mpLiveTick() {
+    const rk = this.state.rk; if (!rk || !rk.mp || !this.mpDb || this.state.screen !== 'risk') return;
+    let L = null;
+    if (rk.phase === 'ask' && rk.q && rk.target) L = { by: rk.mp.side, terr: rk.target, key: qKey(rk.q), lvl: rk.lvl || 0, k: rk.kick ? 'kick' : rk.defend ? 'save' : 'atk', t: rk.time, p: rk.picked === null ? -2 : rk.picked, hide: rk.hide || [] };
+    const s = JSON.stringify(L); if (s === this.mpLiveSent) return;
+    this.mpLiveSent = s;
+    try { this.mpRef('live').set(L).catch(() => {}); } catch (e) {}
+  }
+  componentDidUpdate() { if (this.state.rk && this.state.rk.mp) this.mpLiveTick(); }
+  mpKickOff(id, G) {
+    this.sfx('whistle');
+    const rk = this.state.rk, lvl = rk.lvl || START_TROOPS;
+    const G2 = { ...G, own: { ...G.own, [id]: 'me' }, troops: { ...G.troops, [id]: lvl } };
+    const mp = this.mpPush('base', G2, { turn: mpOther(rk.mp.side), move: { id, lvl } });
+    this.setState({ rk: { ...rk, G: G2, mp, phase: 'wait', kick: false, sel: null, target: null, q: null, picked: null, out: null, note: '' } });
+    this.say('neutral', 'Kick off!', `Your campaign starts in ${byId(id).name}`);
+  }
+  mpAfterMission() {
+    const rk = this.state.rk, mp = rk.mp, mine = mp.turn === mp.side;
+    this.setState({ rk: { ...rk, phase: mine ? 'setup' : 'wait' } });
+  }
+  // End of your turn: the guest also closes the round (round count and match events), then the board goes over.
+  mpEndTurn(G) {
+    const rk = this.state.rk, mp = rk.mp, mv = rk.mpMove || null, shot = !!(mv && mv.out && mv.out.kind === 'shot');
+    let G2 = { ...G, rwall: false };
+    if (mp.side === 'b') {
+      G2 = { ...G2, round: G2.round + 1, event: null };
+      if (!isOver(G2) && G2.round % EVENT_EVERY === 0) { const [G3, ev] = rollEvent(G2); G2 = G3; this.say('neutral', `${ev.icon} ${ev.title}`, ev.text); this.sfx('whistle'); }
+    }
+    if (!shot && isOver(G2)) return this.rOver(G2);
+    const nmp = this.mpPush(shot ? 'shot' : 'turn', G2, { turn: mpOther(mp.side), move: mv });
+    this.setState({ rk: { ...rk, G: { ...G2, wall: false }, mp: nmp, phase: 'wait', cpu: null, mpMove: null, mpNote: '', mpLive: null, sel: null, target: null, q: null, picked: null, out: null, hide: [], sticker: null, note: '' } });
+  }
+  // After your save: the other phone learns how it went, and your own turn starts.
+  mpAfterSave(G) {
+    const rk = this.state.rk, d = rk.defend, out = rk.out || {};
+    if (isOver(G)) return this.rOver(G, { defend: null });
+    const mp = this.mpPush('save', G, { turn: rk.mp.side, move: { id: d.id, lvl: d.lvl, ok: rk.ok, out } });
+    this.setState({ rk: { ...rk, G, mp, phase: 'map', defend: null, cpu: null, hide: [], sticker: null, target: null, q: null, picked: null, out: null, sel: null, note: '' } });
+  }
+  mpLeave() {
+    const rk = this.state.rk;
+    if (rk && rk.mp && rk.phase !== 'over') {
+      if (!this.mpLeaveArm || Date.now() - this.mpLeaveArm > 3000) { this.mpLeaveArm = Date.now(); return this.say('bad', this.mpT('leaveAgain'), this.mpT('leaveSub', { n: rk.mp.name })); }
+      this.mpPush('quit', rk.G, { turn: mpOther(rk.mp.side) });
+    }
+    this.mpLeaveArm = 0;
+    this.mpFinish(true);
+    clearInterval(this.iv);
+    this.setState({ screen: 'home', rk: null });
+  }
+  // Game over: stop listening; the host removes the room a little later, once both phones have the result.
+  mpFinish(now = false) {
+    const side = this.mpSide, ref = this.mpDb && this.mpCodeNow ? this.mpRef('') : null;
+    const done = () => { this.mpDetach(); if (side === 'a' && ref) setTimeout(() => { try { ref.remove().catch(() => {}); } catch (e) {} }, 20000); };
+    if (now) done(); else setTimeout(done, 1500);
+  }
+  mpVals() {
+    const s = this.state, m = s.mpM || {}, rk = s.rk, L = MPT[this.lang()] || MPT.it;
+    const v = {
+      ...L, busy_: L.busy, menu: m.step === 'menu', busy: m.step === 'busy', lobby: m.step === 'lobby',
+      nameVal: m.name || '', codeVal: m.code || '', hasErr: !!m.err, errText: m.err ? this.mpT(m.err) : '',
+      link: m.code ? this.mpLink(m.code) : '', shareLabel: m.copied ? L.copied : L.shareBtn,
+      setName: e => this.setState({ mpM: { ...this.state.mpM, name: String(e.target.value).slice(0, 20), err: '' } }),
+      setCode: e => this.setState({ mpM: { ...this.state.mpM, code: String(e.target.value).toUpperCase().replace(/[^A-Z]/g, '').slice(0, 4), err: '' } }),
+      doCreate: () => this.mpCreate(), doJoin: () => this.mpJoin(), doShare: () => this.mpShare(), doCancel: () => this.mpCancel(),
+      back: () => { this.mpCancel(); this.setState({ screen: 'home', mpM: null }); },
+      wait: false, hasQ: false, gone: false,
+    };
+    if (!rk || !rk.mp) return v;
+    const n = rk.mp.name, live = rk.mpLive, started = COUNTRIES.some(c => rk.G.own[c.id] === 'me') && COUNTRIES.some(c => rk.G.own[c.id] === 'cpu');
+    v.wait = rk.phase === 'wait';
+    v.head = this.mpT('waitHead', { n });
+    v.sub = started ? this.mpT('waitPick', { n }) : this.mpT('waitBase', { n });
+    v.note = rk.mpNote || ''; v.hasNote = !!rk.mpNote;
+    const q = live ? mpFindQ(live.terr, live.key) : null;
+    if (v.wait && live && q) {
+      const Q = qLang(q, this.lang()), t = this.mpTerr(live.terr), done = live.p !== -2;
+      v.hasQ = true;
+      v.sub = live.k === 'kick' ? this.mpT('watchKick', { n, t }) : live.k === 'save' ? this.mpT('watchSave', { n, t }) : this.mpT('watchAtk', { n, t, l: live.lvl });
+      v.qText = Q.text + (Q.clues && Q.clues.length ? ' ' + Q.clues.join(' · ') : '');
+      v.time = done && live.p === -1 ? this.mpT('timeUp') : String(live.t);
+      v.pct = Math.min(100, live.t / this.qT(q) * 100) + '%';
+      v.opts = (Q.o || []).map((t2, i) => {
+        const right = done && i === q.a, wrong = done && i === live.p && i !== q.a, hid = (live.hide || []).includes(i) && !done;
+        return { t: t2, bg: right ? '#2f6b47' : wrong ? '#b5372a' : '#f6eedb', color: right || wrong ? '#f6eedb' : '#2a1d12', op: hid ? 0.25 : 1 };
+      });
+    }
+    if (this.mpGoneAt && rk.phase !== 'over') { v.gone = true; v.goneText = this.mpT('goneText', { n, s: Math.max(0, MP_GRACE - Math.floor((Date.now() - this.mpGoneAt) / 1000)) }); }
+    return v;
   }
 
   mapVals(rk) {
@@ -3155,7 +3677,7 @@ class Component extends DCLogic {
       const h = +(l.size * 0.95).toFixed(2), w = +(h * 0.6).toFixed(2), step = w * 1.08, left = l.x - (step * (l.t.length - 1) + w) / 2, top = l.y - h;
       return [...l.t].map((ch, k) => ({ id: l.t, href: `#rk-l${ch}`, x: +(left + k * step - w / 6).toFixed(2), y: +(top - h / 10).toFixed(2), w: +(w * 8 / 6).toFixed(2), h: +(h * 1.2).toFixed(2) }));
     });
-    const key = G.missions ? (missionById(G.missions.me).key || (missionById(G.missions.me).chain || [])) : [];
+    const mm = G.missions && missionById(G.missions.me), key = mm ? (mm.key || mm.chain || []) : [];
     const stars = MAP.shapes.filter(s => s.lx && byGeo(s.k) && key.includes(byGeo(s.k).id)).map(s => { const x = +(s.lx - (small.includes(s.k) ? 7 : 11)).toFixed(1), cy = +(s.ly - 4.4).toFixed(1); return { x, cy, ty: +(cy + 2.5).toFixed(1) }; });
     const links = MAP.links.map(l => ({ ...l }));
     return { shapes, labels, labelGlyphs, troopTags, tanks, links, stars, z };
@@ -3212,6 +3734,9 @@ class Component extends DCLogic {
       }
     }
 
+    // Online: your base must be free and away from the other player's.
+    if (phase === 'setup' && rk.mp && selC && mpBlocked(G, selC.id)) { levelBtns = []; selCanAttack = false; selText = this.mpT('tooClose', { n: rk.mp.name }); }
+
     // After my answer: a commentary line plus what happened on the board
     let verdict = '', verdictSub = '', vColor = BLUE;
     if (rk.picked !== null && rk.out) {
@@ -3221,6 +3746,7 @@ class Component extends DCLogic {
         if (rk.ok) { verdict = 'What a save!'; verdictSub = out.bonus ? `The rival's shot is saved and you gain ${soldiers(out.bonus)}: ${nm} now has ${out.troops}.` : `The rival's shot is saved. ${nm} holds.`; }
         else { verdict = rk.picked === -1 ? 'Too slow!' : 'Goal for the rival'; vColor = RED; verdictSub = out.kind === 'hit' ? `You lose ${soldiers(rk.lvl)} in ${nm}: ${out.before} down to ${out.troops}.` : `${nm} has fallen. The rival moves in with ${soldiers(out.troops)}.`; }
       }
+      else if (out.kind === 'shot') { verdict = this.mpT('shotHead'); verdictSub = this.mpT('shotSub', { t: this.mpTerr(rk.target), n: rk.mp ? rk.mp.name : '' }); }
       else if (out.kind === 'kick') { verdict = 'Back of the net!'; verdictSub = `${name} is your base. You start there with ${soldiers(rk.lvl)}.`; }
       else if (out.kind === 'kickmiss') { verdict = rk.picked === -1 ? 'Time’s up!' : 'Off the post!'; verdictSub = `No base in ${name}. Pick a territory again: you will get a new question.`; vColor = RED; }
       else if (out.kind === 'miss') { verdict = rk.picked === -1 ? 'Time’s up!' : 'Off the post!'; verdictSub = out.bonus ? `Your rival gains ${soldiers(out.bonus)} in ${name}: now ${out.troops}.` : `Your attack on ${name} stops here.`; vColor = RED; }
@@ -3235,11 +3761,11 @@ class Component extends DCLogic {
     const cp = rk.cpu;
     let cpuHead = 'Rival’s move', cpuMsg = '', cpuHasQ = false;
     if (phase === 'cpu' && cp) {
-      if (cp.none) cpuMsg = 'Your rival has nowhere to go.';
+      if (cp.none) cpuMsg = cp.msg || 'Your rival has nowhere to go.';
       else {
         const nm = byId(cp.id).name, mine = cp.before.own === 'me';
         cpuHead = mine ? `Rival on the attack: ${nm}, level ${cp.lvl}` : `Rival on the move: ${nm}, level ${cp.lvl}`;
-        cpuHasQ = true;
+        cpuHasQ = !!cp.q;
         const out = cp.out;
         cpuMsg = out.kind === 'miss' ? (mine ? (out.bonus ? `Saved! You gain ${soldiers(out.bonus)}: ${nm} now has ${out.troops}.` : `Saved! ${nm} holds with ${soldiers(cp.before.troops)}.`) : `Off the post for the rival. ${nm} stays free.`)
           : out.kind === 'take' ? `The rival takes ${nm} with ${soldiers(out.troops)}.`
@@ -3254,7 +3780,7 @@ class Component extends DCLogic {
     const tipText = tip ? TIPS[tip].text.replace('{T}', T) : '';
     const myM = G.missions ? missionById(G.missions.me) : null, cpuM = G.missions ? missionById(G.missions.cpu) : null;
     const myMs = myM ? missionStatus(G, 'me', myM.id) : null, cpuMs = cpuM ? missionStatus(G, 'cpu', cpuM.id) : null;
-    const w = winner(G), timeLow = rk.time <= 5;
+    const w = rk.mpWin || winner(G), timeLow = rk.time <= 5;
     return {
       ...base,
       isRisk: true,
@@ -3294,7 +3820,7 @@ class Component extends DCLogic {
       rWon: phase === 'over' && w === 'me', rBoom: phase === 'over' && w === 'me' ? BOOM : [], rEndCls: phase === 'over' && w === 'me' ? 'rk-win' : '',
       rEndTitle: w === 'me' ? 'Europe is yours!' : w === 'cpu' ? 'Your rival takes Europe' : 'Honours even',
       rEndColor: w === 'me' ? BLUE : w === 'cpu' ? RIVAL : '#1c1a16',
-      rEndSub: `${c.me} territories to ${c.cpu}, ${G.myPts.toLocaleString()} points to ${(G.cpuPts || 0).toLocaleString()}, ${G.round > MAX_ROUNDS ? 'time ran out' : `decided in round ${G.round}`}.`,
+      rEndSub: rk.mpEnd ? rk.mpEnd : `${c.me} territories to ${c.cpu}, ${G.myPts.toLocaleString()} points to ${(G.cpuPts || 0).toLocaleString()}, ${G.round > MAX_ROUNDS ? 'time ran out' : `decided in round ${G.round}`}.`,
       rQ: rk.q ? qLang(rk.q, this.lang()) : { text: '', fact: '' },
       ...this.whoVals(rk, T),
       rAskLabel: rk.defend ? `Save ${name}! The rival shoots: answer a level 3 question` : rk.kick ? `Winning ${name} as your base with a level ${rk.lvl} question` : `Attacking ${name} with a level ${rk.lvl} question`,
@@ -3389,13 +3915,14 @@ class Component extends DCLogic {
       soundIcon: this.soundOn() ? '🔊' : '🔇', soundLabel: this.soundOn() ? 'Sound on' : 'Sound off', toggleSound: () => this.toggleSound(),
       hasEvent: !!(G && G.event && rk.phase !== 'over'), eventText: G && G.event ? `${G.event.icon} ${G.event.title}: ${G.event.text}` : '',
       rIsDaily: !!dailyText, dailyText, dailyShare: share,
-      rRematch: () => this.startRisk(G && G.daily ? G.daily : null),
+      rRematch: () => rk && rk.mp ? this.mpOpen() : this.startRisk(G && G.daily ? G.daily : null),
     };
   }
   renderVals() {
     const out = this.renderValsEn(), lang = this.lang();
     out.t = T_UI[lang]; out.startLabel = this.loadingQ ? T_UI[lang].loadingQ : T_UI[lang].start; out.langIsIt = lang === 'it';
     out.langBtns = [['it', 'IT', 'Italiano'], ['en', 'EN', 'English']].map(([id, label, name]) => ({ id, label, name, isIt: id === 'it', isEn: id === 'en', op: id === lang ? 1 : 0.55, on_: id === lang, bg: id === lang ? '#e3b341' : 'transparent', color: id === lang ? '#2a1d12' : '#f3ead2', pick: () => this.setLang(id) }));
+    out.rivalLabel = this.state.rk && this.state.rk.mp ? this.state.rk.mp.name : T_UI[lang].rival;
     out.langToggle = () => this.setLang(lang === 'it' ? 'en' : 'it'); out.langShort = lang === 'it' ? 'IT' : 'EN'; out.langIsEn = lang === 'en';
     return lang === 'it' ? trVals(out) : out;
   }
@@ -3414,7 +3941,8 @@ class Component extends DCLogic {
       coText: s.callout ? s.callout.text : '', coSub: s.callout ? s.callout.sub : '',
       coBg: s.callout ? { good: '#e3b341', bad: '#b5372a', neutral: '#2a1d12' }[s.callout.kind] : 'transparent',
       coColor: s.callout && s.callout.kind === 'good' ? '#2a1d12' : '#f6eedb',
-      startRisk: () => this.beginGame(), goHome: go('home'), tutOpen: () => this.setState({ tut: { step: 0, play: false } }), ...this.tutVals(),
+      startRisk: () => this.beginGame(), goHome: () => s.screen === 'risk' && s.rk && s.rk.mp ? this.mpLeave() : go('home')(),
+      mpOk: mpAvail(), mpOpen: () => this.mpOpen(), isMp: s.screen === 'mp', mpv: this.mpVals(), tutOpen: () => this.setState({ tut: { step: 0, play: false } }), ...this.tutVals(),
       homeViewBox: `0 0 ${MAP.W} ${MAP.H}`,
       homeShapes: MAP.shapes.map(m => { const c = byGeo(m.k), o = c ? home.own[c.id] : undefined; return { d: m.d, fill: !c ? '#b8ac8e' : '#efe2c2' }; }),
       streakDays: 12,

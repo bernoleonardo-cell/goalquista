@@ -48,6 +48,18 @@ rep('<span style="font:500 12px/1.4 Rubik,sans-serif;color:#cfe0cc;opacity:.85">
 # The daily-challenge share message links to the website, not to the Claude prototype.
 rep('\\nhttps://claude.ai/artifact/8xqnt9EnkKj4psw8hquAxF`;', '\\n' + SITE_URL + '`;')
 
+# Online challenge ("Sfida un amico"): the Firebase project that carries the moves between two phones.
+# These values are public by design (they identify the project); access is limited by the database rules.
+FIREBASE = {
+    'apiKey': 'AIzaSyBVR0WimG-zXXZfTDm-X0hJc5ALGxo8RnA',
+    'authDomain': 'goalquista.firebaseapp.com',
+    'databaseURL': 'https://goalquista-default-rtdb.europe-west1.firebasedatabase.app',
+    'projectId': 'goalquista',
+    'storageBucket': 'goalquista.firebasestorage.app',
+    'messagingSenderId': '193103757780',
+    'appId': '1:193103757780:web:8c2d193ed117374fcd5641',
+}
+
 # 2. Head: React from local files (no CDN at start-up), app manifest, share preview.
 desc_it = 'Conquista l’Europa una domanda di calcio alla volta: un gioco di strategia e quiz sul calcio europeo, in italiano e in inglese.'
 head = f'''<meta charset="utf-8">
@@ -68,6 +80,7 @@ head = f'''<meta charset="utf-8">
 <meta name="twitter:card" content="summary_large_image">
 <script src="vendor/react.production.min.js"></script>
 <script src="vendor/react-dom.production.min.js"></script>
+<script>window.GQ_FB = {json.dumps(FIREBASE)}; window.GQ_FB_SDK = ['vendor/firebase-app-compat.js', 'vendor/firebase-auth-compat.js', 'vendor/firebase-database-compat.js'];</script>
 <script src="./support.js"></script>'''
 rep('''<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
