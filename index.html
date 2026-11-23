@@ -356,7 +356,7 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       </div>
     </sc-if>
       <div class="rk-wood" style="position:relative;border-radius:16px;padding:6px">
-        <div ref="{{ mapRef }}" style="height:{{ mapBoxH }};overflow:auto;-webkit-overflow-scrolling:touch;border-radius:11px;background:#a9c3c0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3),inset 0 0 18px rgba(30,60,60,.35)">
+        <div ref="{{ mapRef }}" style="aspect-ratio:{{ mapBoxAspect }};overflow:auto;-webkit-overflow-scrolling:touch;border-radius:11px;background:#a9c3c0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.3),inset 0 0 18px rgba(30,60,60,.35)">
           <svg role="img" aria-label="Map of Europe" viewBox="{{ mapViewBox }}" style="display:block;width:{{ mapW }};height:auto">
             <defs>
               <symbol id="fl-ITA" viewBox="0 0 30 20" preserveAspectRatio="none"><rect x="0" y="0" width="10.05" height="20" style="fill:#009246"></rect><rect x="10" y="0" width="10.05" height="20" style="fill:#f1f2f1"></rect><rect x="20" y="0" width="10.05" height="20" style="fill:#ce2b37"></rect></symbol>
@@ -2541,7 +2541,8 @@ function dailySetup(day) {
   const rand = seeded('fr-daily-' + day), me = COUNTRIES[Math.floor(rand() * COUNTRIES.length)].id;
   return { me, cpu: chooseCpuBase(me, rand), missions: dealMissions(rand) };
 }
-const ZOOMS = [1, 1.7, 2.6];
+// Map zoom: 0 shows all of Europe; the game opens one step in (bigger map, a little panning sideways).
+const ZOOMS = [1, 1.35, 1.8, 2.6], ZOOM_START = 1, ZOOM_BOX = 1.35;
 const byId = id => COUNTRIES.find(c => c.id === id);
 const byGeo = g => COUNTRIES.find(c => c.geo === g);
 function pointsFor(lvl, time) { return [0, 100, 150, 200][lvl] + time * 10; }
@@ -3084,7 +3085,7 @@ class Component extends DCLogic {
     const missions = ds ? ds.missions : dealMissions(), others = MISSIONS.map(m => m.id).filter(id => id !== missions.me && id !== missions.cpu).sort(() => Math.random() - 0.5);
     const mOffer = ds ? [missions.me, missions.me, missions.me] : [missions.me, others[0], others[1]].sort(() => Math.random() - 0.5);
     const extra = ds ? { daily: day, diff: 'pro' } : { diff: this.diff() };
-    this.setState({ screen: 'risk', tipsOn: !this.tipsDone(), rk: { G: { ...newGame(null, null, missions), goldOK: this.albumDone(), ...extra }, mOffer, mOpen: false, phase: 'mission', sel: null, zoom: 0, note: '', target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null } });
+    this.setState({ screen: 'risk', tipsOn: !this.tipsDone(), rk: { G: { ...newGame(null, null, missions), goldOK: this.albumDone(), ...extra }, mOffer, mOpen: false, phase: 'mission', sel: null, zoom: ZOOM_START, note: '', target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null } });
     this.startTimer();
   }
   // Choosing a base is not free: a question on that territory decides it. Its level is the number of tanks you start with.
@@ -3425,7 +3426,7 @@ class Component extends DCLogic {
     const other = side === 'a' ? room.guest : room.host;
     let rk = {
       G: { ...newGame(null, null, { me: null, cpu: null }), goldOK: this.albumDone(), diff: 'pro' },
-      mOffer: (room.offers && room.offers[side]) || MISSIONS.slice(0, 3).map(x => x.id), mOpen: false, phase: 'mission', sel: null, zoom: 0, note: '',
+      mOffer: (room.offers && room.offers[side]) || MISSIONS.slice(0, 3).map(x => x.id), mOpen: false, phase: 'mission', sel: null, zoom: ZOOM_START, note: '',
       target: null, lvl: 0, q: null, picked: null, ok: false, out: null, dealt: null, chosen: null, time: this.T(), cpu: null,
       mp: { side, code: this.mpCodeNow, name: mpCleanName(other && other.name) || '?', seq: 0, turn: 'a' }, mpLive: null, mpMove: null,
     };
@@ -3805,8 +3806,19 @@ class Component extends DCLogic {
       shapes, labels, labelGlyphs, troopTags, tanks, links, stars,
       mapViewBox: `0 0 ${MAP.W} ${MAP.H}`,
       mapW: (100 * z) + '%',
-      mapBoxH: Math.round(362 * MAP.H / MAP.W) + 'px',
-      mapRef: el => { this.mapEl = el; },
+      // The map box grows with the zoom up to ZOOM_BOX, so the map uses the height of the screen; beyond that it scrolls.
+      mapBoxAspect: `${MAP.W} / ${Math.round(MAP.H * Math.min(z, ZOOM_BOX))}`,
+      mapRef: el => {
+        // Each time the map appears, centre it on your territories (or on Europe, before you have any).
+        if (el && el !== this.mapSeen) {
+          this.mapSeen = el;
+          const mine = COUNTRIES.filter(x => G.own[x.id] === 'me').map(x => MAP.shapes.find(m => m.k === x.geo)).filter(m => m && m.lx);
+          const fx = mine.length ? mine.reduce((t, m) => t + m.lx, 0) / mine.length / MAP.W : 0.5;
+          const fy = mine.length ? mine.reduce((t, m) => t + m.ly, 0) / mine.length / MAP.H : 0.5;
+          (typeof requestAnimationFrame === 'function' ? requestAnimationFrame : setTimeout)(() => { el.scrollLeft = fx * el.scrollWidth - el.clientWidth / 2; el.scrollTop = fy * el.scrollHeight - el.clientHeight / 2; });
+        }
+        if (el) this.mapEl = el;
+      },
       zoomIn: () => this.rZoom(1), zoomOut: () => this.rZoom(-1),
       selTitle, selSub, selText, selCanAttack, levelBtns, selCanStart,
       selStart: () => selC && this.rStartAt(selC.id), selStartLabel: selC ? `Kick off in ${selC.name}` : 'Kick off here',
