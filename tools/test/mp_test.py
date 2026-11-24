@@ -144,9 +144,10 @@ with sync_playwright() as p:
     check('guest rejoins in the waiting phase', sb['screen'] == 'risk' and sb['phase'] == 'wait' and sb['round'] == 3, sb)
 
     # Host leaves by mistake? First tap warns, second tap leaves: the guest wins.
-    ev(A, "__C().mpLeave()"); A.wait_for_timeout(200)
-    check('first tap only warns', st(A)['screen'] == 'risk')
-    ev(A, "__C().mpLeave()"); A.wait_for_timeout(1000)
+    ev(A, "__C().askExit()"); A.wait_for_timeout(200)
+    check('✕ asks for confirmation first', st(A)['screen'] == 'risk' and 'La sfida andrà persa' in A.inner_text('body'))
+    A.screenshot(path=f'{SHOTS}/12b-exit-confirm.png')
+    A.get_by_role('button', name='Esci dalla sfida').click(); A.wait_for_timeout(1000)
     sb = st(B)
     check('guest wins when the host leaves', sb['phase'] == 'over' and ev(B, "__C().state.rk.mpWin") == 'me', sb)
     B.screenshot(path=f'{SHOTS}/13-guest-wins.png')

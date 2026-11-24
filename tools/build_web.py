@@ -39,7 +39,11 @@ rep('body{margin:0;background:#cdbf9f;', 'body{margin:0;background:#0f2a1f;overs
 # On a computer (wide window) the game screen uses the whole width: the map on the left, filling the height,
 # and the scoreboard, questions and panels in a column on the right. Same query as WIDE_Q in the game.
 WIDE_CSS = ('@media (min-width: 900px) and (min-aspect-ratio: 5/4){'
-            '.rk-felt:has(.rk-risk){max-width:none!important}'
+            '.rk-felt{max-width:none!important}'
+            '.rk-felt>.rk-screen:not(.rk-risk):not(.rk-homepg){max-width:620px;margin:0 auto;width:100%}'
+            '.rk-homepg{display:grid!important;grid-template-columns:minmax(0,480px) minmax(0,560px);justify-content:center;align-content:safe center;column-gap:72px;padding:32px 40px!important}'
+            '.rk-homepg>*:not(.rk-homeA):not(.rk-homeB){grid-column:1/-1}'
+            '.rk-homeA{padding-top:24px!important}.rk-homeB{align-self:center;background:rgba(10,30,20,.35);border-radius:18px;padding:22px 24px}.rk-howdown{display:none}'
             '.rk-risk{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;column-gap:24px;row-gap:12px!important;align-items:start;padding:20px 24px 28px!important}'
             '.rk-colA,.rk-colB{display:flex!important;flex-direction:column;gap:12px;grid-column:2;min-width:0}'
             '.rk-colA{grid-row:1}.rk-colB{grid-row:2}'

@@ -26,7 +26,7 @@
 <x-dc>
 <helmet><style>
 @font-face{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url(fonts/alfa-slab-one-latin-400-normal.woff2) format('woff2');}@font-face{font-family:'Alfa Slab One';font-weight:400;font-display:swap;src:url(fonts/alfa-slab-one-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:400;font-display:swap;src:url(fonts/rubik-latin-400-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:400;font-display:swap;src:url(fonts/rubik-latin-ext-400-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-latin-500-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:500;font-display:swap;src:url(fonts/rubik-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:600;font-display:swap;src:url(fonts/rubik-latin-600-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:600;font-display:swap;src:url(fonts/rubik-latin-ext-600-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}@font-face{font-family:Rubik;font-weight:700;font-display:swap;src:url(fonts/rubik-latin-700-normal.woff2) format('woff2');}@font-face{font-family:Rubik;font-weight:700;font-display:swap;src:url(fonts/rubik-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-02AF,U+1E00-1EFF;}
-@media (min-width: 900px) and (min-aspect-ratio: 5/4){.rk-felt:has(.rk-risk){max-width:none!important}.rk-risk{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;column-gap:24px;row-gap:12px!important;align-items:start;padding:20px 24px 28px!important}.rk-colA,.rk-colB{display:flex!important;flex-direction:column;gap:12px;grid-column:2;min-width:0}.rk-colA{grid-row:1}.rk-colB{grid-row:2}.rk-mapcol{grid-column:1;grid-row:1/3;position:sticky;top:0;min-width:0}.rk-mapcol>.rk-tip{position:absolute!important;top:14px;left:14px;right:66px;z-index:3}}
+@media (min-width: 900px) and (min-aspect-ratio: 5/4){.rk-felt{max-width:none!important}.rk-felt>.rk-screen:not(.rk-risk):not(.rk-homepg){max-width:620px;margin:0 auto;width:100%}.rk-homepg{display:grid!important;grid-template-columns:minmax(0,480px) minmax(0,560px);justify-content:center;align-content:safe center;column-gap:72px;padding:32px 40px!important}.rk-homepg>*:not(.rk-homeA):not(.rk-homeB){grid-column:1/-1}.rk-homeA{padding-top:24px!important}.rk-homeB{align-self:center;background:rgba(10,30,20,.35);border-radius:18px;padding:22px 24px}.rk-howdown{display:none}.rk-risk{display:grid!important;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;column-gap:24px;row-gap:12px!important;align-items:start;padding:20px 24px 28px!important}.rk-colA,.rk-colB{display:flex!important;flex-direction:column;gap:12px;grid-column:2;min-width:0}.rk-colA{grid-row:1}.rk-colB{grid-row:2}.rk-mapcol{grid-column:1;grid-row:1/3;position:sticky;top:0;min-width:0}.rk-mapcol>.rk-tip{position:absolute!important;top:14px;left:14px;right:66px;z-index:3}}
 body{margin:0;background:#0f2a1f;overscroll-behavior:none;font-family:Rubik,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer}
 .rk-colA,.rk-colB{display:contents}
@@ -71,16 +71,16 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
 .rk-shine{animation:rk-shinek 2.6s linear infinite}
 .rk-win{display:inline-block;animation:rk-winpop .9s .15s cubic-bezier(.2,.9,.3,1.3) both;text-shadow:0 0 18px rgba(255,211,77,.9)}
 /* Mission deck: the deck shuffles in the middle, then three cards are dealt onto the table. */
-.rk-deck{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:5/7;transform:translate(-50%,-50%);z-index:2;pointer-events:none;animation:rk-deckout .3s 1.35s ease-in forwards}
+.rk-deck{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:5/7;transform:translate(-50%,-50%);z-index:2;pointer-events:none;animation:rk-deckout .2s .5s ease-in forwards}
 .rk-deck>span{position:absolute;inset:0;border-radius:12px}
-.rk-deck>span:nth-child(1){animation:rk-shufL .42s ease-in-out 3}
-.rk-deck>span:nth-child(2){animation:rk-shufR .42s ease-in-out 3}
+.rk-deck>span:nth-child(1){animation:rk-shufL .25s ease-in-out 2}
+.rk-deck>span:nth-child(2){animation:rk-shufR .25s ease-in-out 2}
 .rk-deck>span:nth-child(3){transform:translate(-2px,-2px)}
 .rk-deck>span:nth-child(4){transform:translate(-4px,-4px)}
 @keyframes rk-shufL{50%{transform:translateX(-62%) rotate(-10deg)}}
 @keyframes rk-shufR{50%{transform:translateX(62%) rotate(10deg)}}
 @keyframes rk-deckout{to{opacity:0;transform:translate(-50%,-50%) scale(.85)}}
-.rk-dealt{opacity:0;animation:rk-dealt .5s cubic-bezier(.2,.9,.3,1.25) var(--dd) forwards}
+.rk-dealt{opacity:1;animation:rk-dealt .35s cubic-bezier(.2,.9,.3,1.25) var(--dd) backwards}
 @keyframes rk-dealt{from{opacity:1;transform:translateX(var(--fx)) scale(.85) rotate(-8deg)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.rk-cta,.rk-ball,.rk-sub,.rk-screen,.rk-starpulse,.rk-boom,.rk-flash,.rk-win,.rk-shine{animation:none}.rk-boom,.rk-flash,.rk-deck{display:none}.rk-dealt{animation:none;opacity:1}}
 .rk-tip{animation:rk-tipin .35s ease-out both}
@@ -95,8 +95,8 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
 <div class="rk-felt" style="position:relative;height:100dvh;width:100%;max-width:480px;color:#f3ead2;overflow:hidden">
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-<div class="rk-screen" style="position:relative;height:100%;overflow-y:auto;padding:0 20px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px">
-  <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;padding:72px 0 0;margin-bottom:-6px;box-sizing:border-box">
+<div class="rk-screen rk-homepg" style="position:relative;height:100%;overflow-y:auto;padding:0 20px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px">
+  <div class="rk-homeA" style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;padding:72px 0 0;margin-bottom:-6px;box-sizing:border-box">
     <span aria-hidden="true" class="rk-ball" style="font-size:44px;line-height:1">⚽</span>
     <h1 style="margin:0;display:flex;flex-direction:column;align-items:center;gap:8px">
       <span style="font:600 15px/1 Rubik,sans-serif;letter-spacing:.32em;color:#e3b341;padding-left:.32em">{{ t.hEuro }}</span>
@@ -119,6 +119,10 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
         </sc-for>
       </div>
     </div>
+    <sc-if value="{{ resumeV.on }}" hint-placeholder-val="{{ false }}">
+      <button class="rk-btn" onClick="{{ resumeV.go }}" style="width:100%;max-width:300px;min-height:56px;font-size:18px;background:#f3ead2;color:#2a1d12">{{ resumeV.label }}</button>
+      <span style="width:100%;max-width:300px;font:500 12px/1.35 Rubik,sans-serif;color:#cfe0cc;text-align:center;margin-top:-8px">{{ resumeV.note }}</span>
+    </sc-if>
     <button class="rk-btn rk-cta" onClick="{{ startRisk }}" style="width:100%;max-width:300px;height:66px;font-size:24px">{{ startLabel }}</button>
     <button onClick="{{ startDaily }}" style="width:100%;max-width:300px;min-height:58px;padding:8px 12px;border-radius:14px;border:1.5px solid #e3b341;background:rgba(227,179,65,.14);color:#f3ead2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px">
       <span style="font:500 17px/1 Rubik">{{ t.daily }}</span>
@@ -134,10 +138,10 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     <span style="font:600 13px/1.4 Rubik,sans-serif;color:#e3b341">{{ careerLine }}</span>
     <span style="font:500 12px/1.4 Rubik,sans-serif;color:#cfe0cc;opacity:.85">{{ t.updated }}</span>
     <a href="privacy.html" style="font:500 12px/1.4 Rubik,sans-serif;color:#e3b341">Privacy · Credits</a>
-    <span aria-hidden="true" style="font:500 13px/1 Rubik,sans-serif;color:#cfe0cc;opacity:.8">{{ t.howDown }}</span>
+    <span aria-hidden="true" class="rk-howdown" style="font:500 13px/1 Rubik,sans-serif;color:#cfe0cc;opacity:.8">{{ t.howDown }}</span>
   </div>
 
-  <div style="display:flex;flex-direction:column;gap:12px">
+  <div class="rk-homeB" style="display:flex;flex-direction:column;gap:12px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px">
       <span style="font:400 18px/1 'Alfa Slab One',serif;color:#f3ead2">{{ t.how }}</span>
       <button onClick="{{ tutOpen }}" style="border:0;background:transparent;color:#e3b341;font:500 14px/1 Rubik;padding:6px 0;text-decoration:underline">{{ t.tutLink }}</button>
@@ -295,11 +299,11 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
   <div class="rk-wood" style="border-radius:16px;padding:8px 10px;display:flex;flex-direction:column;gap:8px">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
       <button onClick="{{ goHome }}" aria-label="Leave game" style="width:36px;height:36px;border-radius:50%;border:0;background:rgba(243,234,210,.16);color:#f3ead2;font-size:17px">✕</button>
-      <span style="font:400 17px/1 'Alfa Slab One',serif;color:#f3ead2">{{ t.round }} {{ rRound }}</span>
+      <span style="font:400 17px/1 'Alfa Slab One',serif;color:#f3ead2;white-space:nowrap;flex-shrink:0">{{ t.round }} {{ rRound }}</span>
       <span style="display:flex;align-items:center;gap:6px">
         <button onClick="{{ langToggle }}" aria-label="Lingua / Language" style="width:36px;height:36px;border-radius:50%;border:0;background:rgba(243,234,210,.16);color:#f3ead2;display:flex;align-items:center;justify-content:center"><sc-if value="{{ langIsIt }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 30 20" width="24" height="16" aria-hidden="true" style="display:block;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.25)"><rect width="10" height="20" fill="#009246"/><rect x="10" width="10" height="20" fill="#ffffff"/><rect x="20" width="10" height="20" fill="#ce2b37"/></svg></sc-if><sc-if value="{{ langIsEn }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 60 30" width="26" height="13" aria-hidden="true" style="display:block;border-radius:3px;box-shadow:0 0 0 1px rgba(0,0,0,.25)"><clipPath id="ukc2"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#ukc2)" stroke="#c8102e" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#c8102e" stroke-width="6"/></svg></sc-if></button>
         <button onClick="{{ toggleSound }}" aria-label="{{ soundLabel }}" style="width:36px;height:36px;border-radius:50%;border:0;background:rgba(243,234,210,.16);color:#f3ead2;font-size:16px">{{ soundIcon }}</button>
-        <span style="font:600 14px/1 Rubik;color:#f3ead2;padding:8px 10px;border-radius:999px;background:rgba(20,10,4,.3)">{{ rPts }}</span>
+        <span style="font:600 13px/1 Rubik;color:#f3ead2;padding:8px 9px;border-radius:999px;background:rgba(20,10,4,.3);white-space:nowrap">{{ rPts }}</span>
       </span>
     </div>
     <div role="img" aria-label="{{ scoreAria }}" style="display:flex;flex-direction:column;gap:5px">
@@ -314,6 +318,9 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
     </div>
   </div>
 
+  <sc-if value="{{ turnOn }}" hint-placeholder-val="{{ true }}">
+    <div role="status" aria-live="polite" style="display:flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:8px 12px;background:{{ turnBg }};color:#f6eedb;font:600 15px/1.2 Rubik;box-shadow:0 3px 0 rgba(10,30,20,.45);text-align:center">{{ turnText }}</div>
+  </sc-if>
   <sc-if value="{{ mpv.gone }}" hint-placeholder-val="{{ false }}">
     <div role="alert" style="border-radius:12px;padding:9px 12px;background:#b5372a;color:#f6eedb;font:500 14px/1.35 Rubik;box-shadow:0 3px 0 rgba(10,30,20,.45)">{{ mpv.goneText }}</div>
   </sc-if>
@@ -552,8 +559,11 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
           </div>
         </div>
       </sc-if>
-      <sc-if value="{{ rCanReinforce }}" hint-placeholder-val="{{ false }}">
-        <button onClick="{{ rReinforce }}" style="height:46px;border-radius:14px;border:1.5px solid #e3b341;background:rgba(227,179,65,.16);color:#f3ead2;font:600 15px/1 Rubik">{{ reinforceLabel }}</button>
+      <sc-if value="{{ rShowReinforce }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ rReinforce }}" aria-disabled="{{ reinforceOff }}" style="min-height:46px;padding:6px 10px;border-radius:14px;border:1.5px solid #e3b341;background:rgba(227,179,65,.16);color:#f3ead2;opacity:{{ reinforceOp }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+          <span style="font:600 15px/1.1 Rubik">{{ reinforceLabel }}</span>
+          <sc-if value="{{ reinforceOff }}" hint-placeholder-val="{{ false }}"><span style="font:500 12px/1.2 Rubik;color:#f0d48a">{{ reinforceSub }}</span></sc-if>
+        </button>
       </sc-if>
       <sc-if value="{{ rNoTargets }}" hint-placeholder-val="{{ false }}">
         <button onClick="{{ rSkip }}" style="height:50px;border-radius:14px;border:1.5px dashed rgba(243,234,210,.6);background:transparent;color:#f3ead2;font:500 16px/1 Rubik">{{ t.pass }}</button>
@@ -663,7 +673,7 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
       </sc-if>
       <div style="display:flex;gap:10px">
         <button onClick="{{ goHome }}" style="flex:1;height:54px;border-radius:14px;border:1.5px solid rgba(243,234,210,.5);background:transparent;color:#f3ead2;font:500 16px/1 Rubik">{{ t.homeBtn }}</button>
-        <button class="rk-btn" onClick="{{ rRematch }}" style="flex:1.6;height:54px">{{ t.rematch }}</button>
+        <button class="rk-btn" onClick="{{ rRematch }}" style="flex:1.6;height:54px">{{ rematchLabel }}</button>
       </div>
     </div>
   </sc-if>
@@ -680,12 +690,14 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
         </div>
       </div>
     </sc-if>
+      <sc-if value="{{ rTimerOn }}" hint-placeholder-val="{{ true }}">
       <div style="display:flex;align-items:center;gap:12px">
         <span class="{{ rTimerCls }}" style="font:400 36px/1 'Alfa Slab One',serif;width:46px;color:{{ rTimerColor }}">{{ rTime }}</span>
         <div style="flex:1;height:10px;border-radius:5px;background:rgba(0,0,0,.28);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.4)">
           <div style="height:100%;width:{{ rTimerPct }};background:{{ rTimerColor }};border-radius:5px;transition:width 1s linear, background .3s"></div>
         </div>
       </div>
+      </sc-if>
       <sc-if value="{{ rShowShop }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex;gap:8px">
           <sc-for list="{{ shop }}" as="sh" hint-placeholder-count="2">
@@ -787,6 +799,16 @@ button:focus-visible{outline:3px solid #e3b341;outline-offset:2px}
   </sc-if>
   </div>
 </div>
+  <sc-if value="{{ exitV.on }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;inset:0;z-index:8;background:rgba(10,20,14,.62);display:flex;align-items:center;justify-content:center;padding:20px">
+      <div class="rk-card" role="alertdialog" aria-modal="true" aria-label="{{ exitV.title }}" style="width:100%;max-width:340px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;color:#2a1d12">
+        <span style="font:400 22px/1.15 'Alfa Slab One',serif">{{ exitV.title }}</span>
+        <span style="font-size:15px;line-height:1.45;color:#4a3d2a;text-wrap:pretty">{{ exitV.text }}</span>
+        <button class="rk-btn" onClick="{{ exitV.stay }}" style="height:50px">{{ exitV.stayLabel }}</button>
+        <button onClick="{{ exitV.leave }}" style="height:46px;border-radius:12px;border:2px solid #8a2215;background:transparent;color:#8a2215;font:600 15px/1 Rubik">{{ exitV.leaveLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
   <div aria-live="polite" style="position:absolute;left:0;right:0;top:36%;z-index:5;pointer-events:none">
     <sc-if value="{{ coA }}" hint-placeholder-val="{{ false }}">
         <div class="rk-co" style="display:flex;justify-content:center">
@@ -2022,12 +2044,74 @@ function mergeExtra(X) {
   Object.keys(X.EASY_Q || {}).forEach(t => { if (RQ[t]) RQ[t].push(...X.EASY_Q[t]); });
   const IT = X.RQ_IT || {};
   Object.values(RQ).forEach(list => list.forEach(q => { const t = IT[q.text]; if (t && !q.it) q.it = { text: t[0], o: t[1] || q.o, fact: t[2], clues: t[3] || null }; }));
+  curateBank();
+}
+// ---- Question bank rules (Leonardo, 24 November 2026) ----
+// Football from 2000 on: a question whose years (in the question or its answer) all fall before 2000 is left out.
+// "Who came second / who lost the final" questions are capped, options never name a team or player the question
+// already names, notes like "(RSSSF, to 16 November 2025)" are dropped from the text, and a few spellings are fixed.
+const QYEAR_FROM = 2000;
+const qYears = s => (String(s || '').match(/\b(18\d\d|19\d\d|20[0-4]\d)\b/g) || []).map(Number);
+const RUNNER_RE = /\b(runners?-up|finished second|second behind|second place|lost the final|losing finalist|beaten finalist)\b|^Who did .+ beat in the .+ final\?$/i;
+const isRunnerQ = q => RUNNER_RE.test(q.text || '');
+const NOTE_RE = /\s*\((?:RSSSF[^()]*|fino al [^()]*|last match included:[^()]*|as of [^()]*|a \w+ \d{4}|page updated:[^()]*|pagina aggiornata[^()]*|aggiornat[^()]*)\)/g;
+// Accents typed as apostrophes in the bank ("citta'", "segno'"): fixed word by word, so closing quotes stay as they are.
+const ACCENT_FIX = { Entro: 'Entrò', Jose: 'José', Kaka: 'Kaká', Lascio: 'Lasciò', Mbappe: 'Mbappé', Nicolo: 'Nicolò', Segno: 'Segnò', ando: 'andò', annuncio: 'annunciò',
+  arrivo: 'arrivò', batte: 'batté', citta: 'città', conquisto: 'conquistò', eguaglio: 'eguagliò', elimino: 'eliminò', fini: 'finì', gia: 'già', gioco: 'giocò', inizio: 'iniziò',
+  lascio: 'lasciò', li: 'lì', nazionalita: 'nazionalità', pago: 'pagò', passo: 'passò', piu: 'più', pote: 'poté', prelevo: 'prelevò', rilevo: 'rilevò', segno: 'segnò',
+  sostitui: 'sostituì', stabili: 'stabilì', trasferi: 'trasferì', usci: 'uscì', rimonta: 'rimontò' };
+function fixText(s, keepNotes) {
+  if (typeof s !== 'string') return s;
+  return (keepNotes ? s : s.replace(NOTE_RE, ''))
+    .replace(/(^|[^'‘\w])([A-Za-z]+)'(?=[\s.,;:!?)]|$)/g, (m, pre, w) => ACCENT_FIX[w] ? pre + ACCENT_FIX[w] : m)
+    .replace(/Mbappe(?![\wé])/g, 'Mbappé');
+}
+function fixQ(q) {
+  // Source notes go only from "Who am I?" cards; other questions keep them (their Italian is built from the full text).
+  const keep = !(q.clues && q.clues.length), f = x => fixText(x, keep);
+  q.text = f(q.text); q.fact = fixText(q.fact, true);
+  if (q.clues) q.clues = q.clues.map(f);
+  if (q.o) q.o = q.o.map(x => fixText(x, true));
+  if (q.it) { q.it = { ...q.it, text: f(q.it.text), fact: fixText(q.it.fact, true), o: q.it.o && q.it.o.map(x => fixText(x, true)), clues: q.it.clues && q.it.clues.map(f) }; }
+}
+// Years in "up to 2026" or a source note only date the record, not the player's era.
+const eraText = s => String(s || '').replace(NOTE_RE, '').replace(/\b(up to|until|to date,?|as of|fino al?|ad oggi)\s+(\d+\s+\w+\s+)?\d{4}/gi, '');
+// Cards about players whose careers ended before 2000, even when their clues carry no year.
+const OLD_ERA = new Set(['Zbigniew Boniek', 'Oleh Blokhin']);
+const qOldOnly = q => { if (q.clues && q.clues.length && OLD_ERA.has(q.o[q.a])) return true; const ys = q.clues && q.clues.length ? qYears(eraText(q.clues.join(' '))) : qYears(eraText(q.text) + ' ' + (q.o ? q.o[q.a] : '')); return ys.length > 0 && Math.max(...ys) < QYEAR_FROM; };
+const namedIn = (name, text) => name && name.length >= 4 && new RegExp('(^|[^\\p{L}])' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}])', 'u').test(text);
+function curateBank() {
+  const itName = {};
+  Object.values(RQ).forEach(list => list.forEach(q => { if (q.it && q.it.o) q.o.forEach((o, i) => { if (q.it.o[i]) itName[o] = q.it.o[i]; }); }));
+  Object.keys(RQ).forEach(t => {
+    let list = RQ[t].filter(q => !qOldOnly(q));
+    list.forEach(fixQ);
+    // Keep only the most recent "who came second" questions: about 1 in 12 of the territory's bank.
+    const runners = list.filter(isRunnerQ).sort((a, b) => Math.max(0, ...qYears(b.text)) - Math.max(0, ...qYears(a.text)));
+    const cap = Math.max(3, Math.round(list.length / 12)), drop = new Set(runners.slice(cap));
+    list = list.filter(q => !drop.has(q));
+    // A wrong option the question itself names (a club cannot beat itself): swap it for another name of the same kind.
+    list.forEach(q => {
+      if (!q.o || q.clues) return;
+      q.o.forEach((o, i) => {
+        if (i === q.a || !namedIn(o, q.text)) return;
+        const kind = String(q.id || '').replace(/-\d[\d–-]*$/, '');
+        const same = list.filter(x => x !== q && x.o && (kind ? String(x.id || '').replace(/-\d[\d–-]*$/, '') === kind : true));
+        const cand = [...new Set(same.flatMap(x => x.o))].find(c => !q.o.includes(c) && !namedIn(c, q.text) && c !== q.o[q.a]);
+        if (!cand) return;
+        q.o = q.o.map((x, k) => k === i ? cand : x);
+        if (q.it && q.it.o) q.it = { ...q.it, o: q.it.o.map((x, k) => k === i ? (itName[cand] || cand) : x) };
+      });
+    });
+    RQ[t] = list;
+  });
 }
 function loadExtra() {
   if (EXTRA_READY) return Promise.resolve(true);
   if (!EXTRA_WAIT) EXTRA_WAIT = fetch('questions-extra.json').then(r => r.ok ? r.json() : null).then(X => { mergeExtra(X); if (!EXTRA_READY) EXTRA_WAIT = null; return EXTRA_READY; }).catch(() => { EXTRA_WAIT = null; return false; });
   return EXTRA_WAIT;
 }
+curateBank();
 if (typeof globalThis !== 'undefined' && globalThis.FR_EXTRA) mergeExtra(globalThis.FR_EXTRA);
 // ---- Italian for generated questions (league tables and the World Cup / Euro dossier) ----
 // Handwritten and new questions carry their own Italian (q.it); generated ones are translated here from their templates.
@@ -2285,7 +2369,7 @@ const UI_EXACT = {
   'Belgium and Luxembourg': 'Belgio e Lussemburgo', 'Czechia, Slovakia, Hungary and Slovenia': 'Cechia, Slovacchia, Ungheria e Slovenia',
   'Serbia, Bosnia, Montenegro, Kosovo, North Macedonia, Albania and Bulgaria': 'Serbia, Bosnia, Montenegro, Kosovo, Macedonia del Nord, Albania e Bulgaria',
   'Romania, Ukraine, Moldova, Belarus, the Baltics, Russia, the Caucasus and Cyprus': 'Romania, Ucraina, Moldavia, Bielorussia, Paesi baltici, Russia, Caucaso e Cipro',
-  'Chain complete': 'Catena completa', 'completed': 'completata',
+  'Chain complete': 'Catena completa', 'completed': 'completata', 'Completed': 'Completata',
   // difficulty, ranks
   'Amateur': 'Dilettante', 'Pro': 'Pro', 'Legend': 'Leggenda', 'Rookie': 'Esordiente', 'Captain': 'Capitano',
   // legends and events
@@ -2293,7 +2377,7 @@ const UI_EXACT = {
   'An extra turn: you play again straight away.': 'Un turno in più: giochi di nuovo subito.', 'Your next attack question loses one wrong option.': "Alla prossima domanda d'attacco sparisce un'opzione sbagliata.",
   'Your next attack question shows only 2 options.': "La prossima domanda d'attacco mostra solo 2 opzioni.", 'The rival cannot attack your territories on its next turn.': 'Il rivale non può attaccare i tuoi territori al prossimo turno.',
   'For full-album champions': "Per chi completa l'album", 'Take any free territory on the map, with 2 tanks.': 'Prendi un territorio libero qualsiasi sulla mappa, con 2 carri.',
-  'Transfer window': 'Calciomercato', 'Nobody can attack it this round.': 'Nessuno può attaccarlo in questo round.', 'Take it with a right answer this round and get +1 tank.': 'Conquistalo con una risposta giusta in questo round e prendi +1 carro.',
+  'Transfer window': 'Calciomercato', 'Get it wrong at level 2 or 3 and the rival gains 1 or 2 tanks.': 'Se sbagli a livello 2 o 3, il rivale guadagna 1 o 2 carri.', 'Nobody can attack it this round.': 'Nessuno può attaccarlo in questo round.', 'Take it with a right answer this round and get +1 tank.': 'Conquistalo con una risposta giusta in questo round e prendi +1 carro.',
   'Both sides get +1 tank on their smallest territory.': 'Entrambi ricevete +1 carro sul vostro territorio più debole.', 'Extra turn': 'Turno extra',
   // tips
   'Tap any territory to make it your base.': 'Tocca un territorio qualsiasi per farne la tua base.', 'Happy with it? Kick off here. Your rival then picks a base far away.': 'Ti va bene? Parti da qui. Poi il rivale sceglie una base lontana.',
@@ -2330,7 +2414,7 @@ const UI_EXACT = {
 // Thousands written the Italian way: 10,000 → 10.000.
 const itN = n => String(n).replace(/,(?=\d{3}\b)/g, '.');
 const UI_RULES = [
-  [/^(🪧|🌙|🔁) (.+?): (.+)$/u, m => `${m[1]} ${trUI(m[2])}: ${trUI(m[3])}`],
+  [/^(🪧|🌙|🔁) (.+?): (.+)$/u, m => `${m[1]} ${trUI(m[2])}: ${trUI(m[3])}`], [/^(🪧|🌙|🔁) ([^:]+)$/u, m => `${m[1]} ${trUI(m[2])}`],
   [/^Strike in ([A-Z][A-Za-z' ]*?)$/, m => `Sciopero ${inT(m[1])}`], [/^European night in ([A-Z][A-Za-z' ]*?)$/, m => `Notte europea ${inT(m[1])}`],
   [/^You start in (.+) with (\d+ tanks?)\. Your rival picked (.+) with a level (\d) question and starts with (\d+ tanks?)\.$/, m => `Parti ${inT(m[1])} con ${tanksIt(m[2])}. Il rivale ha scelto ${tn(m[3])} con una domanda di livello ${m[4]} e parte con ${tanksIt(m[5])}.`],
   [/^Your campaign starts in ([A-Z][A-Za-z' ]*?)$/, m => `La tua campagna parte ${inT(m[1])}`],
@@ -2416,7 +2500,7 @@ function trUI(s) {
   return r;
 }
 // Walks the values handed to the page and puts every interface string into Italian.
-const UI_SKIP = new Set(['rQ', 'rOpts', 'rClues', 'cpuQText', 'cpuAns', 'stickerName', 'rStickerName', 'shapes', 'labels', 'labelGlyphs', 'langBtns', 'startLabel', 'tutTitle', 'tutText', 'tutNextLabel', 'tutCount', 'tutDots', 'troopTags', 'tanks', 'links', 'stars', 'scoreCells', 't', 'mpv', 'rivalLabel']);
+const UI_SKIP = new Set(['rQ', 'rOpts', 'rClues', 'cpuQText', 'cpuAns', 'stickerName', 'rStickerName', 'shapes', 'labels', 'labelGlyphs', 'langBtns', 'startLabel', 'tutTitle', 'tutText', 'tutNextLabel', 'tutCount', 'tutDots', 'troopTags', 'tanks', 'links', 'stars', 'scoreCells', 't', 'mpv', 'rivalLabel', 'turnText', 'exitV', 'reinforceLabel', 'reinforceSub', 'resumeV', 'rematchLabel', 'rClues']);
 function trVals(v, key) {
   if (typeof v === 'string') return trUI(v);
   if (Array.isArray(v)) return v.map(x => trVals(x));
@@ -2425,7 +2509,7 @@ function trVals(v, key) {
 }
 
 // Static page text in both languages.
-const T_UI = {"en":{"hEuro":"EUROPEAN","albumDoneBadge":"🏆 Album complete","sub1":"Conquer Europe,","sub2":"one football question","sub3":"at a time.","rivalLevel":"Rival level","start":"Start campaign ▶","loadingQ":"Loading questions…","daily":"📅 Daily challenge","updated":"Questions last updated: 21 November 2026","howDown":"How to play ↓","how":"How to play","how1":"Pick a territory for your base and a question level from 1 to 3. Answer right and you kick off there with that many tanks; get it wrong and you pick again.","how2":"Attack a neighbour and pick a die: 1, 2 or 3. A harder question wins you more tanks, or knocks out more of your rival’s.","how3":"You get a secret mission at kick-off, like in the classic board games of conquest. Complete it before your rival completes theirs to win. A hat-trick, three right in a row, lets you pick a legend card with a power: Der Kaiser (free tanks), Total Football (extra turn), Hand of God (one option removed), Il Cucchiaio (two options removed) or Catenaccio (the rival cannot attack you for a turn). When the rival attacks one of your territories, you get a level 3 question to save it. Right answers at level 2 and 3 win stickers for your album.","how4":"Choose your rival: Amateur makes more mistakes and attacks less, Legend rarely misses and goes for your weak territories. The daily challenge gives everyone the same bases and mission each day, against a Pro rival: share your result with a friend. Play it on consecutive days to build a streak 🔥: every 7th day wins a rare sticker. Every 4th round brings a match event: a strike that shields a territory, a European night worth +1 tank, or a transfer window.","how5":"Points are money. During a question: +5 seconds (600) or 50:50 (1,200), one help per question. After a lost attack: VAR (2,000, once a game) replays it with a new question. On the map: Reinforce (2,500) adds 2 tanks to one of your territories. Points you don’t spend go to your career: Rookie, Pro (10,000), Captain (30,000), Legend (75,000), Icon (150,000). Each new rank opens a pack of 3 stickers.","albumDone":"Album complete!","albumDoneText":"Every sticker collected. Your album turns gold and every territory is now a home stadium.","ballon":"Golden Trophy","ballonText":"Take any free territory on the map, with 2 tanks.","newCard":"New legend card: it can be dealt from your next campaign.","addDeck":"Add it to my deck","homeBtn":"Home","albumBanner":"🏆 Album complete. Every territory is a home stadium, and the Golden Trophy is in your legend deck.","albumText":"collected. Answer a level 2 question right to win a sticker of that territory; level 3 can also win a rare gold one. Complete a page and that territory becomes your home stadium: +1 tank every time you take it. Complete the whole album for a trophy and the Golden Trophy legend card.","round":"Round","you":"You","rival":"Rival","keyStar":"Key territories have a gold star on the map.","hatLegend":"Hat-trick: 3 right in a row draws a legend card","extra":"Extra turn","skipTips":"Skip tips","gotIt":"Got it","freeFaded":"Free (faded)","canAttack":"You can attack","seaRoute":"Sea route","tankLegend":"Tank = owner, number = tanks there","roll":"Roll your risk: each die is a question level.","canAttackList":"Territories you can attack","pass":"Nothing in reach: pass the turn","pickMission":"Pick your secret mission","threeCards":"Three cards, face down. Tap one: that is your mission for the whole game.","yourMission":"Your secret mission","rivalMission":"Your rival has a mission too. You will find out what it was at full time.","chooseBase":"Choose your base","theyAnswered":"They answered","dailyResult":"Your daily result","share":"Share result","rematch":"Rematch","whoAmI":"Who am I?","addedAlbum":"· added to your album","continue":"Continue","tutLabel":"How to play in 4 steps","tutSkip":"Skip","tutBack":"Back","tutNext":"Next","tutGo":"Play ▶","tutClose":"Got it","tutLink":"Quick guide","tutT1":"Your secret mission","tutX1":"Three cards are dealt: keep one secret mission. Whoever completes theirs first wins.","tutT2":"Your base","tutX2":"Tap a territory and pick a level from 1 to 3. Answer right and you kick off there with that many tanks; get it wrong and you pick again.","tutT3":"Attack","tutX3":"Tap a neighbouring territory and pick a die from 1 to 3: it is the level of the question and the number of tanks at stake.","tutT4":"Answer and conquer","tutX4":"You have 15 seconds. Right answer: a free territory is yours; a rival one loses tanks, and when it has none left it is yours. Three right in a row win a legend card."},"it":{"hEuro":"EUROPEAN","albumDoneBadge":"🏆 Album completo","sub1":"Conquista l'Europa,","sub2":"una domanda di calcio","sub3":"alla volta.","rivalLevel":"Livello del rivale","start":"Inizia la campagna ▶","loadingQ":"Carico le domande…","daily":"📅 Sfida del giorno","updated":"Domande aggiornate al 21 novembre 2026","howDown":"Come si gioca ↓","how":"Come si gioca","how1":"Scegli un territorio per la tua base e un livello di domanda da 1 a 3. Se rispondi giusto parti da lì con altrettanti carri; se sbagli scegli di nuovo.","how2":"Attacca un vicino e scegli un dado: 1, 2 o 3. Una domanda più difficile ti fa guadagnare più carri, o ne toglie di più al rivale.","how3":"Ricevi una missione segreta al calcio d’inizio, come nei classici giochi da tavolo di conquista. Completala prima che il rivale completi la sua per vincere. Una tripletta, tre risposte giuste di fila, ti fa scegliere una carta leggenda con un potere: Der Kaiser (carri gratis), Calcio totale (turno extra), Mano de Dios (un’opzione in meno), Il Cucchiaio (due opzioni in meno) o Catenaccio (il rivale non può attaccarti per un turno). Quando il rivale attacca un tuo territorio, hai una domanda di livello 3 per salvarlo. Le risposte giuste di livello 2 e 3 fanno vincere figurine per il tuo album.","how4":"Scegli il rivale: il Dilettante sbaglia di più e attacca meno, la Leggenda sbaglia di rado e punta ai tuoi territori deboli. La sfida del giorno dà a tutti le stesse basi e la stessa missione ogni giorno, contro un rivale Pro: condividi il risultato con un amico. Giocala per più giorni di fila per allungare la serie 🔥: ogni 7° giorno vinci una figurina rara. Ogni 4 round arriva un evento: uno sciopero che protegge un territorio, una notte europea che vale +1 carro, o il calciomercato.","how5":"I punti sono soldi. Durante una domanda: +5 secondi (600) o 50:50 (1.200), un aiuto per domanda. Dopo un attacco perso: VAR (2.000, una volta a partita) lo ripete con una nuova domanda. Sulla mappa: Rinforzi (2.500) aggiunge 2 carri a un tuo territorio. I punti che non spendi vanno nella carriera: Esordiente, Pro (10.000), Capitano (30.000), Leggenda (75.000), Icona (150.000). Ogni nuovo grado apre un pacchetto di 3 figurine.","albumDone":"Album completo!","albumDoneText":"Tutte le figurine raccolte. L'album diventa d'oro e ogni territorio è ora uno stadio di casa.","ballon":"Trofeo d'Oro","ballonText":"Prendi un territorio libero qualsiasi sulla mappa, con 2 carri.","newCard":"Nuova carta leggenda: può uscire dalla prossima campagna.","addDeck":"Aggiungila al mio mazzo","homeBtn":"Home","albumBanner":"🏆 Album completo. Ogni territorio è uno stadio di casa, e il Trofeo d'Oro è nel tuo mazzo leggende.","albumText":"raccolte. Rispondi giusto a una domanda di livello 2 per vincere una figurina di quel territorio; il livello 3 può darne anche una rara dorata. Completa una pagina e quel territorio diventa il tuo stadio di casa: +1 carro ogni volta che lo conquisti. Completa tutto l’album per un trofeo e la carta leggenda Trofeo d’Oro.","round":"Round","you":"Tu","rival":"Rivale","keyStar":"I territori chiave hanno una stella dorata sulla mappa.","hatLegend":"Tripletta: 3 giuste di fila valgono una carta leggenda","extra":"Turno extra","skipTips":"Salta i consigli","gotIt":"Ho capito","freeFaded":"Libero (sbiadito)","canAttack":"Puoi attaccare","seaRoute":"Rotta via mare","tankLegend":"Carro = proprietario, numero = carri presenti","roll":"Lancia il rischio: ogni dado è un livello di domanda.","canAttackList":"Territori che puoi attaccare","pass":"Niente a portata: passa il turno","pickMission":"Scegli la tua missione segreta","threeCards":"Tre carte coperte. Toccane una: sarà la tua missione per tutta la partita.","yourMission":"La tua missione segreta","rivalMission":"Anche il rivale ha una missione. Scoprirai qual era al fischio finale.","chooseBase":"Scegli la tua base","theyAnswered":"Ha risposto","dailyResult":"Il tuo risultato del giorno","share":"Condividi il risultato","rematch":"Rivincita","whoAmI":"Chi sono?","addedAlbum":"· aggiunta al tuo album","continue":"Continua","tutLabel":"Come si gioca in 4 passi","tutSkip":"Salta","tutBack":"Indietro","tutNext":"Avanti","tutGo":"Gioca ▶","tutClose":"Ho capito","tutLink":"Guida rapida","tutT1":"La missione segreta","tutX1":"Ti vengono date tre carte: tieni una missione segreta. Vince chi completa per primo la propria.","tutT2":"La tua base","tutX2":"Tocca un territorio e scegli un livello da 1 a 3. Se rispondi giusto parti da lì con altrettanti carri; se sbagli scegli di nuovo.","tutT3":"L'attacco","tutX3":"Tocca un territorio vicino e scegli un dado da 1 a 3: è il livello della domanda e il numero di carri in gioco.","tutT4":"Rispondi e conquista","tutX4":"Hai 15 secondi. Risposta giusta: un territorio libero diventa tuo; a uno del rivale togli carri, e quando li finisce è tuo. Tre giuste di fila ti danno una carta leggenda."} };
+const T_UI = {"en":{"hEuro":"EUROPEAN","albumDoneBadge":"🏆 Album complete","sub1":"Conquer Europe,","sub2":"one football question","sub3":"at a time.","rivalLevel":"Rival level","start":"Start campaign ▶","loadingQ":"Loading questions…","daily":"📅 Daily challenge","updated":"Questions last updated: 21 November 2026","howDown":"How to play ↓","how":"How to play","how1":"Pick a territory for your base and a question level from 1 to 3. Answer right and you kick off there with that many tanks; get it wrong and you pick again.","how2":"Attack a neighbour and pick a die: 1, 2 or 3. A harder question wins you more tanks, or knocks out more of your rival’s.","how3":"You get a secret mission at kick-off, like in the classic board games of conquest. Complete it before your rival completes theirs to win. A hat-trick, three right in a row, lets you pick a legend card with a power: Der Kaiser (free tanks), Total Football (extra turn), Hand of God (one option removed), Il Cucchiaio (two options removed) or Catenaccio (the rival cannot attack you for a turn). When the rival attacks one of your territories, you always defend it with a level 3 question. If you attack a rival territory and miss at level 2 or 3, the rival gains 1 or 2 tanks. Right answers at level 2 and 3 win stickers for your album.","how4":"Choose your rival: Amateur makes more mistakes and attacks less, Legend rarely misses and goes for your weak territories. The daily challenge gives everyone the same bases and mission each day, against a Pro rival: share your result with a friend. Play it on consecutive days to build a streak 🔥: every 7th day wins a rare sticker. Every 4th round brings a match event: a strike that shields a territory, a European night worth +1 tank, or a transfer window.","how5":"Points are money. During a question: +5 seconds (600) or 50:50 (1,200), one help per question. After a lost attack: VAR (2,000, once a game) replays it with a new question. On the map: Reinforce (2,500) adds 2 tanks to one of your territories. Points you don’t spend go to your career: Rookie, Pro (10,000), Captain (30,000), Legend (75,000), Icon (150,000). Each new rank opens a pack of 3 stickers.","albumDone":"Album complete!","albumDoneText":"Every sticker collected. Your album turns gold and every territory is now a home stadium.","ballon":"Golden Trophy","ballonText":"Take any free territory on the map, with 2 tanks.","newCard":"New legend card: it can be dealt from your next campaign.","addDeck":"Add it to my deck","homeBtn":"Home","albumBanner":"🏆 Album complete. Every territory is a home stadium, and the Golden Trophy is in your legend deck.","albumText":"collected. Answer a level 2 question right to win a sticker of that territory; level 3 can also win a rare gold one. Complete a page and that territory becomes your home stadium: +1 tank every time you take it. Complete the whole album for a trophy and the Golden Trophy legend card.","round":"Round","you":"You","rival":"Rival","keyStar":"Key territories have a gold star on the map.","hatLegend":"Hat-trick: 3 right in a row draws a legend card","extra":"Extra turn","skipTips":"Skip tips","gotIt":"Got it","freeFaded":"Free (faded)","canAttack":"You can attack","seaRoute":"Sea route","tankLegend":"Tank = owner, number = tanks there","roll":"Roll your risk: each die is a question level.","canAttackList":"Territories you can attack","pass":"Nothing in reach: pass the turn","pickMission":"Pick your secret mission","threeCards":"Three cards, face down. Tap one: that is your mission for the whole game.","yourMission":"Your secret mission","rivalMission":"Your rival has a mission too. You will find out what it was at full time.","chooseBase":"Choose your base","theyAnswered":"They answered","dailyResult":"Your daily result","share":"Share result","rematch":"Rematch","whoAmI":"Who am I?","addedAlbum":"· added to your album","continue":"Continue","tutLabel":"How to play in 4 steps","tutSkip":"Skip","tutBack":"Back","tutNext":"Next","tutGo":"Play ▶","tutClose":"Got it","tutLink":"Quick guide","tutT1":"Your secret mission","tutX1":"Three cards are dealt: keep one secret mission. Whoever completes theirs first wins.","tutT2":"Your base","tutX2":"Tap a territory and pick a level from 1 to 3. Answer right and you kick off there with that many tanks; get it wrong and you pick again.","tutT3":"Attack","tutX3":"Tap a neighbouring territory and pick a level from 1 to 3: it is the question's difficulty and the number of tanks at stake. Attack the rival and miss at level 2 or 3, and the rival gains 1 or 2 tanks.","tutT4":"Answer and conquer","tutX4":"You have 15 seconds. Right answer: a free territory becomes yours; a rival's loses tanks, and when it has none left it is yours. When the rival attacks one of your territories, you defend it with a question. Three right in a row win a legend card."},"it":{"hEuro":"CALCIO EUROPEO","albumDoneBadge":"🏆 Album completo","sub1":"Conquista l'Europa,","sub2":"una domanda di calcio","sub3":"alla volta.","rivalLevel":"Livello del rivale","start":"Inizia la campagna ▶","loadingQ":"Carico le domande…","daily":"📅 Sfida del giorno","updated":"Domande aggiornate al 21 novembre 2026","howDown":"Come si gioca ↓","how":"Come si gioca","how1":"Scegli un territorio per la tua base e un livello di domanda da 1 a 3. Se rispondi giusto parti da lì con altrettanti carri; se sbagli scegli di nuovo.","how2":"Attacca un vicino e scegli un dado: 1, 2 o 3. Una domanda più difficile ti fa guadagnare più carri, o ne toglie di più al rivale.","how3":"Ricevi una missione segreta al calcio d’inizio, come nei classici giochi da tavolo di conquista. Completala prima che il rivale completi la sua per vincere. Una tripletta, tre risposte giuste di fila, ti fa scegliere una carta leggenda con un potere: Der Kaiser (carri gratis), Calcio totale (turno extra), Mano de Dios (un’opzione in meno), Il Cucchiaio (due opzioni in meno) o Catenaccio (il rivale non può attaccarti per un turno). Quando il rivale attacca un tuo territorio, tocca sempre a te difenderlo con una domanda di livello 3. Se invece attacchi un territorio del rivale e sbagli a livello 2 o 3, il rivale guadagna 1 o 2 carri. Le risposte giuste di livello 2 e 3 fanno vincere figurine per il tuo album.","how4":"Scegli il rivale: il Dilettante sbaglia di più e attacca meno, la Leggenda sbaglia di rado e punta ai tuoi territori deboli. La sfida del giorno dà a tutti le stesse basi e la stessa missione ogni giorno, contro un rivale Pro: condividi il risultato con un amico. Giocala per più giorni di fila per allungare la serie 🔥: ogni 7° giorno vinci una figurina rara. Ogni 4 round arriva un evento: uno sciopero che protegge un territorio, una notte europea che vale +1 carro, o il calciomercato.","how5":"I punti sono soldi. Durante una domanda: +5 secondi (600) o 50:50 (1.200), un aiuto per domanda. Dopo un attacco perso: VAR (2.000, una volta a partita) lo ripete con una nuova domanda. Sulla mappa: Rinforzi (2.500) aggiunge 2 carri a un tuo territorio. I punti che non spendi vanno nella carriera: Esordiente, Pro (10.000), Capitano (30.000), Leggenda (75.000), Icona (150.000). Ogni nuovo grado apre un pacchetto di 3 figurine.","albumDone":"Album completo!","albumDoneText":"Tutte le figurine raccolte. L'album diventa d'oro e ogni territorio è ora uno stadio di casa.","ballon":"Trofeo d'Oro","ballonText":"Prendi un territorio libero qualsiasi sulla mappa, con 2 carri.","newCard":"Nuova carta leggenda: può uscire dalla prossima campagna.","addDeck":"Aggiungila al mio mazzo","homeBtn":"Menu","albumBanner":"🏆 Album completo. Ogni territorio è uno stadio di casa, e il Trofeo d'Oro è nel tuo mazzo leggende.","albumText":"raccolte. Rispondi giusto a una domanda di livello 2 per vincere una figurina di quel territorio; il livello 3 può darne anche una rara dorata. Completa una pagina e quel territorio diventa il tuo stadio di casa: +1 carro ogni volta che lo conquisti. Completa tutto l’album per un trofeo e la carta leggenda Trofeo d’Oro.","round":"Round","you":"Tu","rival":"Rivale","keyStar":"I territori chiave hanno una stella dorata sulla mappa.","hatLegend":"Tripletta: 3 giuste di fila valgono una carta leggenda","extra":"Turno extra","skipTips":"Salta i consigli","gotIt":"Ho capito","freeFaded":"Libero (sbiadito)","canAttack":"Puoi attaccare","seaRoute":"Rotta via mare","tankLegend":"Carro = proprietario, numero = carri presenti","roll":"Lancia il rischio: ogni dado è un livello di domanda.","canAttackList":"Territori che puoi attaccare","pass":"Niente a portata: passa il turno","pickMission":"Scegli la tua missione segreta","threeCards":"Tre carte coperte. Toccane una: sarà la tua missione per tutta la partita.","yourMission":"La tua missione segreta","rivalMission":"Anche il rivale ha una missione. Scoprirai qual era al fischio finale.","chooseBase":"Scegli la tua base","theyAnswered":"Ha risposto","dailyResult":"Il tuo risultato del giorno","share":"Condividi il risultato","rematch":"Rivincita","whoAmI":"Chi sono?","addedAlbum":"· aggiunta al tuo album","continue":"Continua","tutLabel":"Come si gioca in 4 passi","tutSkip":"Salta","tutBack":"Indietro","tutNext":"Avanti","tutGo":"Gioca ▶","tutClose":"Ho capito","tutLink":"Guida rapida","tutT1":"La missione segreta","tutX1":"Ti vengono date tre carte: tieni una missione segreta. Vince chi completa per primo la propria.","tutT2":"La tua base","tutX2":"Tocca un territorio e scegli un livello da 1 a 3. Se rispondi giusto parti da lì con altrettanti carri; se sbagli scegli di nuovo.","tutT3":"L'attacco","tutX3":"Tocca un territorio vicino e scegli un livello da 1 a 3: è la difficoltà della domanda e il numero di carri in gioco. Se attacchi il rivale e sbagli a livello 2 o 3, lui guadagna 1 o 2 carri.","tutT4":"Rispondi e conquista","tutX4":"Hai 15 secondi. Risposta giusta: un territorio libero diventa tuo; a uno del rivale togli carri, e quando li finisce è tuo. Quando il rivale attacca un tuo territorio, tocca a te difenderlo con una domanda. Tre giuste di fila ti danno una carta leggenda."}};
 const MAJORITY = Math.floor(COUNTRIES.length / 2) + 1;   // 11 of 21 (used only when no missions are dealt)
 // Secret missions: one is dealt to each side before the bases are chosen. Completing yours wins the game.
 // Sticker album: legends of each territory; names starting with * are rare (level 3 only).
@@ -2526,13 +2610,13 @@ const MAX_ROUNDS = 40;                                    // safety stop
 const START_TROOPS = 3;
 const CARD_STREAK = 3;
 const SAVE_T = 8;                                          // seconds to save a territory the rival attacks
-const CPU_SKILL = [0, 0.8, 0.6, 0.4];                     // rival's chance to answer a level 1/2/3 question
-const RIVAL_ATTACK_CHANCE = 0.6;
+const CPU_SKILL = [0, 0.86, 0.7, 0.52];                     // rival's chance to answer a level 1/2/3 question
+const RIVAL_ATTACK_CHANCE = 0.85;
 // Rival difficulty: chance to answer a level 1/2/3 question right, how often it goes for a weak territory of yours,
 // and how it picks the level of a question on a free territory ([chance of level 1, chance of level 1 or 2]).
 const DIFFS = {
   amateur: { name: 'Amateur', skill: [0, 0.65, 0.45, 0.25], attack: 0.3, lv: [0.5, 0.85] },
-  pro: { name: 'Pro', skill: CPU_SKILL, attack: RIVAL_ATTACK_CHANCE, lv: [0.3, 0.75] },
+  pro: { name: 'Pro', skill: CPU_SKILL, attack: RIVAL_ATTACK_CHANCE, lv: [0.2, 0.65] },
   legend: { name: 'Legend', skill: [0, 0.9, 0.75, 0.55], attack: 0.9, lv: [0.1, 0.4] },
 };
 const diffOf = G => DIFFS[G.diff] || DIFFS.pro;
@@ -2592,7 +2676,9 @@ function targets(G, side) {
 // A question's lasting key, used to avoid repeating questions across games.
 const qKey = q => q.id || q.text;
 function nextQ(G, id, lvl, rand = Math.random, seen = null) {
-  const pool = RQ[id].map((q, i) => ({ q, i })).filter(x => x.q.lvl === lvl);
+  let pool = RQ[id].map((q, i) => ({ q, i })).filter(x => x.q.lvl === lvl);
+  // A level with very few questions borrows from the next level up or down.
+  if (pool.length < 6) pool = RQ[id].map((q, i) => ({ q, i })).filter(x => Math.abs(x.q.lvl - lvl) <= 1);
   const key = id + lvl;
   let used = G.used[key] || [];
   if (used.length >= pool.length) used = [];
@@ -2602,8 +2688,12 @@ function nextQ(G, id, lvl, rand = Math.random, seen = null) {
   const from = fresh.length ? fresh : left;
   // "Who am I?" cards are few among thousands of questions: when one is available, it comes up 1 time in 3.
   const cards = from.filter(x => x.q.clues && x.q.clues.length);
-  const pick = cards.length && cards.length < from.length && rand() < 1 / 3 ? cards[Math.floor(rand() * cards.length)] : from[Math.floor(rand() * from.length)];
-  return [pick.q, { ...G, used: { ...G.used, [key]: [...used, pick.i] } }];
+  // Variety: avoid two questions of the same kind in a row, and keep "who came second" questions rare.
+  const kind = q => q.clues && q.clues.length ? 'who' : isRunnerQ(q) ? 'runner' : String(q.id || '').replace(/-[A-Z]{3}(?=-|$)/g, '').replace(/[-\d–]+$/, '') || 'q';
+  const varied = from.filter(x => kind(x.q) !== G.lastKind && (kind(x.q) !== 'runner' || rand() < 0.35));
+  const base = varied.length ? varied : from;
+  const pick = cards.length && cards.length < from.length && rand() < 1 / 3 ? cards[Math.floor(rand() * cards.length)] : base[Math.floor(rand() * base.length)];
+  return [pick.q, { ...G, used: { ...G.used, [key]: [...used, pick.i] }, lastKind: kind(pick.q) }];
 }
 // Hat-trick: two face-down cards are dealt, one extra turn and one gift of 1–3 tanks, in random order.
 // Hat-trick cards are football legends, each with a power named after what made them famous.
@@ -2959,6 +3049,7 @@ class Component extends DCLogic {
     if (G.daily) this.saveDaily({ day: G.daily, won: w === 'me', round: Math.min(G.round, MAX_ROUNDS), pts: G.myPts });
     this.sfx(w === 'me' ? 'fanfare' : 'groan');
     const careerGain = this.state.rk && this.state.rk.careerGain ? this.state.rk.careerGain : this.addCareer(G.myPts);
+    if (!mpOn) this.clearSave();
     this.setState({ rk: { ...this.state.rk, ...patch, G, phase: 'over', sel: null, careerGain, mpDone: mpOn } });
     this.say(w === 'me' ? 'good' : w === 'cpu' ? 'bad' : 'neutral', 'Full time!', w === 'me' ? 'Europe is yours' : w === 'cpu' ? 'Your rival takes Europe' : 'Honours even');
     if (mpOn) this.mpFinish();
@@ -3053,7 +3144,11 @@ class Component extends DCLogic {
     }
   }
   streak() { if (!this._streak) { let s = null; try { s = JSON.parse(localStorage.getItem('fr-streak') || 'null'); } catch (e) {} this._streak = s && s.last ? s : { last: null, n: 0 }; } return this._streak; }
-  startDaily() { this.beginGame(this.today()); }
+  startDaily() {
+    // Once today's challenge is done it stays closed until tomorrow (no replays for career points).
+    if (this.dailyResult()) return this.say('neutral', this.tx('Sfida di oggi già giocata', 'Today’s challenge is done'), this.tx('Torna domani per la prossima', 'Come back tomorrow for the next one'));
+    this.beginGame(this.today());
+  }
   // First game on this device: a 4-step guide before kick-off. It can be opened again from "How to play".
   tutDone() { try { return localStorage.getItem('fr-tutorial-done') === '1'; } catch (e) { return false; } }
   beginGame(daily = null) {
@@ -3088,6 +3183,7 @@ class Component extends DCLogic {
   }
   startRiskNow(daily = null) {
     clearInterval(this.iv);
+    this.bankSaved();
     this.shownTip = null;
     // Three face-down mission cards: you keep the one you turn. The rival's mission is never among them.
     // In the daily challenge every card is today's mission, so everyone plays the same one.
@@ -3190,7 +3286,11 @@ class Component extends DCLogic {
     if (ok) this.sfx('cheer', rk.target); else this.sfx('groan');
     if (sticker) this.checkAlbumDone();
     const nm = byId(rk.target).name;
-    if (out.card) this.say('good', 'Hat-trick!', 'Pick a legend');
+    if (out.card) {
+      const line = out.kind === 'shot' ? [this.mpT('shotHead'), this.mpT('shotSay', { n: rk.mp.name })] : out.kind === 'take' ? ['Back of the net!', `${nm} is yours`] : out.kind === 'hit' ? ['Big hit!', `${nm} loses ${soldiers(rk.lvl)}`] : ['Territory taken!', `${nm} is yours`];
+      this.say('good', line[0], line[1]);
+      clearTimeout(this.hatT); this.hatT = setTimeout(() => this.say('good', 'Hat-trick!', 'Pick a legend'), 1700);
+    }
     else if (out.kind === 'shot') this.say('good', this.mpT('shotHead'), this.mpT('shotSay', { n: rk.mp.name }));
     else if (out.kind === 'miss') this.say('bad', i === -1 ? 'Time’s up!' : 'Off the post!', out.bonus ? `Rival gains ${soldiers(out.bonus)} in ${nm}` : `${nm} holds out`);
     else if (out.kind === 'take') this.say('good', 'Back of the net!', `${nm} is yours`);
@@ -3295,32 +3395,61 @@ class Component extends DCLogic {
     const plan = cpuPlan(G);
     if (G.wall) G = { ...G, wall: false };   // Catenaccio lasts one rival turn
     if (!plan) return this.setState({ rk: { ...rk, G, phase: 'cpu', sel: null, cpu: { none: true } } });
-    const [q, G1] = nextQ(G, plan.id, plan.lvl, Math.random, this.seenQ());
-    this.markSeen(q);
-    const ok = Math.random() < diffOf(G).skill[plan.lvl];
-    const wrong = [0, 1, 2, 3].filter(i => i !== q.a);
-    const ans = ok ? q.a : wrong[Math.floor(Math.random() * wrong.length)];
-    const before = { own: G.own[plan.id], troops: G.troops[plan.id] };
-    // A shot on one of your territories: you get a quick question to save it.
-    if (ok && before.own === 'me') {
-      // The save is always a level 3 question, with the usual time.
-      const [dq, G1b] = nextQ(G1, plan.id, 3, Math.random, this.seenQ());
-      this.markSeen(dq);
-      this.setState({ rk: { ...rk, G: G1b, phase: 'ask', sel: null, kick: false, defend: { ...plan, before }, target: plan.id, lvl: plan.lvl, q: dq, hide: [], sticker: null, picked: null, out: null, dealt: null, chosen: null, time: this.qT(dq) } });
-      return this.say('bad', 'Shot on goal!', `Save ${byId(plan.id).name} with a level 3 question`);
+    const before = { own: G.own[plan.id], troops: G.troops[plan.id] }, nm = byId(plan.id).name;
+    // An attack on one of your territories: you always answer to defend it (the rival never answers its own question).
+    // First a warning with what is at stake, then the save question.
+    if (before.own === 'me') {
+      this.setState({ rk: { ...rk, G, phase: 'cpu', sel: null, cpu: { ...plan, threat: true, before } } });
+      this.sfx('whistle');
+      return this.say('bad', this.tx('Tocca a te difendere!', 'Your turn to defend!'), this.tx(`Il rivale attacca ${TERR_IT[nm] || nm}`, `The rival attacks ${nm}`));
     }
-    const [G2a, out] = attack(G1, 'cpu', plan.id, plan.lvl, ok);
+    // A free territory: the rival's result depends on its level; no question is shown.
+    const ok = Math.random() < diffOf(G).skill[plan.lvl];
+    const [G2a, out] = attack(G, 'cpu', plan.id, plan.lvl, ok);
     // The rival scores like you: level points plus 10 for each second it leaves on the clock.
     const G2 = ok ? { ...G2a, cpuPts: (G2a.cpuPts || 0) + pointsFor(plan.lvl, 3 + Math.floor(Math.random() * 8)) } : G2a;
-    this.setState({ rk: { ...rk, G: G2, phase: 'cpu', sel: null, cpu: { ...plan, q, ans, ok, out, before } } });
-    const nm = byId(plan.id).name;
-    if (before.own === 'me') {
-      if (out.kind === 'miss') this.say('good', 'Saved!', out.bonus ? `You gain ${soldiers(out.bonus)} in ${nm}` : `${nm} holds`);
-      else if (out.kind === 'hit') this.say('bad', 'Under attack!', `You lose ${soldiers(plan.lvl)} in ${nm}`);
-      else this.say('bad', 'Fallen!', `${nm} goes to the rival`);
-    } else if (out.kind !== 'miss') this.say('neutral', 'Rival on the move', `${nm} taken`);
+    this.setState({ rk: { ...rk, G: G2, phase: 'cpu', sel: null, cpu: { ...plan, q: null, ok, out, before } } });
+    if (out.kind !== 'miss') this.say('neutral', 'Rival on the move', `${nm} taken`);
   }
-  rCpuGo() { this.seenTip(); const rk = this.state.rk; if (rk.mp) return this.setState({ rk: { ...rk, phase: 'map', cpu: null, note: '' } }); this.rEndRound(rk.G); }
+  // The save: a level 3 question on the attacked territory.
+  rDefendGo() {
+    const rk = this.state.rk, c = rk && rk.cpu; if (!rk || rk.phase !== 'cpu' || !c || !c.threat) return;
+    const [dq, G1] = nextQ(rk.G, c.id, 3, Math.random, this.seenQ());
+    this.markSeen(dq);
+    this.setState({ rk: { ...rk, G: G1, phase: 'ask', sel: null, kick: false, defend: { id: c.id, lvl: c.lvl, before: c.before }, target: c.id, lvl: c.lvl, q: dq, hide: [], sticker: null, picked: null, out: null, dealt: null, chosen: null, time: this.qT(dq), cpu: null } });
+  }
+  tx(it, en) { return this.lang() === 'it' ? it : en; }
+  // The ✕ button asks first. A game against the computer stays saved on this device and can be resumed from the home;
+  // an online challenge is lost (the other player wins).
+  askExit() {
+    const rk = this.state.rk;
+    if (!rk || rk.phase === 'over') { clearInterval(this.iv); if (rk && rk.mp) this.mpFinish(true); return this.setState({ screen: 'home', rk: null, exitAsk: false }); }
+    this.setState({ exitAsk: true });
+  }
+  doExit() {
+    const rk = this.state.rk;
+    if (rk && rk.mp) return this.mpLeave();
+    this.saveGame(true);
+    clearInterval(this.iv);
+    this.setState({ screen: 'home', rk: null, exitAsk: false });
+  }
+  saveGame(force = false) {
+    const s = this.state, rk = s.rk;
+    if (s.screen !== 'risk' || !rk || rk.mp || rk.phase === 'over') return;
+    const now = Date.now(); if (!force && now - (this._savedAt || 0) < 1500) return;
+    this._savedAt = now;
+    try { localStorage.setItem('fr-save', JSON.stringify({ v: 1, at: now, rk: { ...rk, preG: null } })); } catch (e) {}
+  }
+  savedGame() { try { const x = JSON.parse(localStorage.getItem('fr-save') || 'null'); return x && x.v === 1 && x.rk && x.rk.G ? x : null; } catch (e) { return null; } }
+  clearSave() { try { localStorage.removeItem('fr-save'); } catch (e) {} }
+  resumeGame() {
+    const x = this.savedGame(); if (!x) return;
+    const go = () => { clearInterval(this.iv); this.shownTip = null; this.setState({ screen: 'risk', tipsOn: false, exitAsk: false, rk: { ...x.rk, sel: null } }); this.startTimer(); };
+    if (EXTRA_READY) go(); else loadExtra().then(go);
+  }
+  // Starting a new game while one is saved: the saved game's points still go to your career, so nothing is lost.
+  bankSaved() { const x = this.savedGame(); if (x) { this.addCareer(x.rk.G.myPts || 0); this.clearSave(); } }
+  rCpuGo() { this.seenTip(); const rk = this.state.rk; if (rk.cpu && rk.cpu.threat) return this.rDefendGo(); if (rk.mp) return this.setState({ rk: { ...rk, phase: 'map', cpu: null, note: '' } }); this.rEndRound(rk.G); }
   rEndRound(G, note) {
     const rk = this.state.rk; let G2 = { ...G, round: G.round + 1, event: null };
     if (isOver(G2)) return this.rOver(G2);
@@ -3558,7 +3687,7 @@ class Component extends DCLogic {
     this.mpLiveSent = s;
     try { this.mpRef('live').set(L).catch(() => {}); } catch (e) {}
   }
-  componentDidUpdate() { if (this.state.rk && this.state.rk.mp) this.mpLiveTick(); }
+  componentDidUpdate() { if (this.state.rk && this.state.rk.mp) this.mpLiveTick(); else this.saveGame(); }
   mpKickOff(id, G) {
     this.sfx('whistle');
     const rk = this.state.rk, lvl = rk.lvl || START_TROOPS;
@@ -3593,13 +3722,11 @@ class Component extends DCLogic {
   mpLeave() {
     const rk = this.state.rk;
     if (rk && rk.mp && rk.phase !== 'over') {
-      if (!this.mpLeaveArm || Date.now() - this.mpLeaveArm > 3000) { this.mpLeaveArm = Date.now(); return this.say('bad', this.mpT('leaveAgain'), this.mpT('leaveSub', { n: rk.mp.name })); }
       this.mpPush('quit', rk.G, { turn: mpOther(rk.mp.side) });
     }
-    this.mpLeaveArm = 0;
     this.mpFinish(true);
     clearInterval(this.iv);
-    this.setState({ screen: 'home', rk: null });
+    this.setState({ screen: 'home', rk: null, exitAsk: false });
   }
   // Game over: stop listening; the host removes the room a little later, once both phones have the result.
   mpFinish(now = false) {
@@ -3731,7 +3858,7 @@ class Component extends DCLogic {
       const bySea = selCanAttack && !LAND[selC.id].some(x => G.own[x] === 'me') ? 'Reached by sea route. ' : '';
       if (selCanAttack) {
         selText = area + bySea + (o === 'cpu'
-          ? 'Pick your risk: 1 is easy, 3 is hard. Get it right and the rival loses that many tanks.'
+          ? 'Pick your risk: 1 is easy, 3 is hard. Get it right and the rival loses that many tanks. Get it wrong at level 2 or 3 and the rival gains 1 or 2 tanks.'
           : 'Pick your risk: 1 is easy, 3 is hard. Get it right and that many tanks roll in.');
         levelBtns = [1, 2, 3].map(l => ({
           lvl: l,
@@ -3773,6 +3900,14 @@ class Component extends DCLogic {
     let cpuHead = 'Rival’s move', cpuMsg = '', cpuHasQ = false;
     if (phase === 'cpu' && cp) {
       if (cp.none) cpuMsg = cp.msg || 'Your rival has nowhere to go.';
+      else if (cp.threat) {
+        // Before the save: what the rival is attacking and what you lose if the answer is wrong.
+        const nm = this.mpTerr(cp.id), n = cp.before.troops, keep = n - cp.lvl;
+        cpuHead = this.tx('🛡 Tocca a te difendere!', '🛡 Your turn to defend!');
+        cpuMsg = this.tx(
+          `Il rivale attacca ${nm} con livello ${cp.lvl}. Rispondi giusto a una domanda di livello 3 e la salvi` + (cp.lvl > 1 ? `, guadagnando ${cp.lvl - 1 === 1 ? '1 carro' : (cp.lvl - 1) + ' carri'}` : '') + `. Se sbagli, ` + (keep <= 0 ? `perdi ${nm}.` : `perdi ${cp.lvl === 1 ? '1 carro' : cp.lvl + ' carri'} (te ne restano ${keep}).`),
+          `The rival attacks ${nm} at level ${cp.lvl}. Answer a level 3 question right and you save it` + (cp.lvl > 1 ? `, gaining ${soldiers(cp.lvl - 1)}` : '') + `. Get it wrong and ` + (keep <= 0 ? `you lose ${nm}.` : `you lose ${soldiers(cp.lvl)} (${keep} left).`));
+      }
       else {
         const nm = byId(cp.id).name, mine = cp.before.own === 'me';
         cpuHead = mine ? `Rival on the attack: ${nm}, level ${cp.lvl}` : `Rival on the move: ${nm}, level ${cp.lvl}`;
@@ -3805,7 +3940,7 @@ class Component extends DCLogic {
       missionName: myM ? myM.name : '', missionText: myM ? myM.text : '', missionProg: myMs ? myMs.text : '',
       missionOpen: !!rk.showMission, missionArrow: rk.showMission ? '▴' : '▾',
       rMissionOk: () => this.rMissionOk(), mClosed: phase === 'mission' && !rk.mOpen, mOpen: phase === 'mission' && !!rk.mOpen,
-      missionCards: (rk.mOffer || []).map((id, i) => ({ label: `mission card ${i + 1}`, fx: ['112%', '0%', '-112%'][i], dd: `${(1.45 + i * 0.2).toFixed(2)}s`, on: () => this.rPickMission(i) })), rToggleMission: () => this.rToggleMission(),
+      missionCards: (rk.mOffer || []).map((id, i) => ({ label: `mission card ${i + 1}`, fx: ['112%', '0%', '-112%'][i], dd: `${(0.5 + i * 0.1).toFixed(2)}s`, on: () => this.rPickMission(i) })), rToggleMission: () => this.rToggleMission(),
       endMine: myM ? `Your mission, ${myM.name}: ${myMs.done ? 'completed' : myMs.text.toLowerCase()}.` : '',
       endCpu: cpuM ? `Your rival’s mission was ${cpuM.name}: ${cpuMs.done ? 'completed' : cpuMs.text.toLowerCase()}.` : '',
       tipMap: tipWhere === 'map', tipPanel: tipWhere === 'panel', tipAsk: tipWhere === 'ask', tipAnswer: tipWhere === 'answer', tipCpu: tipWhere === 'cpu',
@@ -3839,7 +3974,7 @@ class Component extends DCLogic {
       cpuQText: cpuHasQ ? qLang(cp.q, this.lang()).text : '',
       cpuAns: cpuHasQ ? `${qLang(cp.q, this.lang()).o[cp.ans]} ${cp.ok ? '✓' : '✕'}` : '',
       cpuAnsColor: cpuHasQ && cp.ok ? '#8a2215' : '#1d3f99',
-      rCpuBtn: 'Your turn',
+      rCpuBtn: rk.cpu && rk.cpu.threat ? this.tx(`Difendi ${this.mpTerr(rk.cpu.id)}`, `Defend ${byId(rk.cpu.id).name}`) : 'Your turn',
       rWon: phase === 'over' && w === 'me', rBoom: phase === 'over' && w === 'me' ? BOOM : [], rEndCls: phase === 'over' && w === 'me' ? 'rk-win' : '',
       rEndTitle: w === 'me' ? 'Europe is yours!' : w === 'cpu' ? 'Your rival takes Europe' : 'Honours even',
       rEndColor: w === 'me' ? BLUE : w === 'cpu' ? RIVAL : '#1c1a16',
@@ -3848,6 +3983,15 @@ class Component extends DCLogic {
       ...this.whoVals(rk, T),
       rAskLabel: rk.defend ? `Save ${name}! The rival shoots: answer a level 3 question` : rk.kick ? `Winning ${name} as your base with a level ${rk.lvl} question` : `Attacking ${name} with a level ${rk.lvl} question`,
       rSticker: !!rk.sticker, rStickerName: rk.sticker ? rk.sticker.name : '', rStickerRare: rk.sticker && rk.sticker.rare ? 'Rare sticker!' : 'New sticker', rStickerBg: rk.sticker && rk.sticker.rare ? 'linear-gradient(135deg,#ffe28a,#e3b341)' : '#f6eedb',
+      // Whose turn it is, always in view.
+      ...(() => {
+        const n = rk.mp ? rk.mp.name : null, threat = (phase === 'cpu' && rk.cpu && rk.cpu.threat) || (phase === 'ask' && rk.defend);
+        const mine = !threat && ['mission', 'setup', 'map', 'place', 'gold', 'ask'].includes(phase);
+        const text = phase === 'over' ? '' : threat ? this.tx('🛡 Tocca a te difendere!', '🛡 Your turn to defend!') : mine ? this.tx('🟦 Tocca a te', '🟦 Your turn')
+          : n ? this.tx(`🟥 Turno di ${n}`, `🟥 ${n}’s turn`) : this.tx('🟥 Turno del rivale', '🟥 Rival’s turn');
+        return { turnOn: !!text, turnText: text, turnBg: threat ? '#b5372a' : mine ? '#1d3f99' : '#7a2a20' };
+      })(),
+      rTimerOn: rk.picked === null,
       rTime: rk.time, rTimerPct: Math.min(100, rk.time / T * 100) + '%', rTimerColor: timeLow ? '#ff9b7d' : '#f3ead2', rTimerCls: timeLow ? 'rk-low' : '',
       rOpts: rk.q ? optsFor(qLang(rk.q, this.lang()), rk.picked, i => this.rPick(i)).map((o, i) => (rk.hide || []).includes(i) && rk.picked === null ? { ...o, opacity: 0.15, mark: rk.hideMark || '🥄', onPick: () => {} } : o) : [],
       rAnswered: rk.picked !== null,
@@ -3859,7 +4003,11 @@ class Component extends DCLogic {
         return { id, cost: SHOP[id], ok, label: `${label} · ${SHOP[id].toLocaleString()}`, op: ok ? 1 : 0.4, buy: () => this.buyHelp(id) };
       }),
       rCanVar: this.canVar(), rVar: () => this.rVar(), varLabel: `📺 VAR: replay this attack · ${SHOP.var.toLocaleString()} pts`,
-      rCanReinforce: this.canReinforce(), rReinforce: () => this.rReinforce(), reinforceLabel: `🪖 Reinforce: +2 tanks · ${SHOP.reinforce.toLocaleString()} pts`,
+      rCanReinforce: this.canReinforce(), rReinforce: () => this.rReinforce(),
+      rShowReinforce: !!(rk.phase === 'map' && !G.deal && !(G.toPlace > 0) && COUNTRIES.some(c => G.own[c.id] === 'me')),
+      reinforceOff: !this.canReinforce(), reinforceOp: this.canReinforce() ? 1 : 0.6,
+      reinforceLabel: this.tx(`🪖 Rinforzi: +2 carri · ${itN(SHOP.reinforce.toLocaleString('en'))} pt`, `🪖 Reinforce: +2 tanks · ${SHOP.reinforce.toLocaleString('en')} pts`),
+      reinforceSub: this.tx(`Ti mancano ${itN(Math.max(0, SHOP.reinforce - G.myPts).toLocaleString('en'))} pt`, `${Math.max(0, SHOP.reinforce - G.myPts).toLocaleString('en')} pts to go`),
       endCareer: rk.careerGain ? `+${rk.careerGain.gain.toLocaleString()} career points · total ${rk.careerGain.total.toLocaleString()} · rank: ${rk.careerGain.rank}` + (rk.careerGain.up ? `. New rank! ${rk.careerGain.pack.length} stickers added to your album.` : rk.careerGain.next ? ` · next: ${rk.careerGain.next.name} at ${rk.careerGain.next.at.toLocaleString()}` : '') : '',
       rCardTitle: G.deal ? 'Hat-trick! Pick a legend' : rk.dealt ? `You picked: ${cardName(rk.dealt[rk.chosen])}` : '',
       rCardText: G.deal ? 'Two legend cards, face down. Each one has a power.' : rk.dealt ? `${LEGENDS[rk.dealt[rk.chosen].type].who}. ${cardText(rk.dealt[rk.chosen])}` : '',
@@ -3887,7 +4035,7 @@ class Component extends DCLogic {
     const seen = rk.picked !== null ? cl.length : Math.min(cl.length, 1 + Math.floor(gone / step));
     return { rIsWho: true, rNotWho: false, rClues: cl.map((t, i) => {
       const on = i < seen;
-      return { n: i + 1, text: on ? t : i === seen ? `Next clue in ${i * step - gone}s` : 'Clue still face down', op: on ? 1 : .5, tf: on ? 'none' : 'translateY(4px)', badge: on ? '#1f6b4a' : 'rgba(42,29,18,.28)', weight: on ? 500 : 400, style: on ? 'normal' : 'italic' };
+      return { n: i + 1, text: on ? t : i === seen ? this.tx(`Prossimo indizio tra ${i * step - gone} s`, `Next clue in ${i * step - gone}s`) : this.tx('Indizio ancora coperto', 'Clue still face down'), op: on ? 1 : .5, tf: on ? 'none' : 'translateY(4px)', badge: on ? '#1f6b4a' : 'rgba(42,29,18,.28)', weight: on ? 500 : 400, style: on ? 'normal' : 'italic' };
     }) };
   }
   albumVals() {
@@ -3916,7 +4064,7 @@ class Component extends DCLogic {
   dailyVals() {
     const rk = this.state.rk, G = rk && rk.G, d = this.diff(), res = this.dailyResult(), st = this.streak();
     const liveStreak = st.last === this.today() || st.last === prevDay(this.today()) ? st.n : 0;
-    const fmt = day => { const [y, m, dd] = day.split('-').map(Number); return `${dd} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]} ${y}`; };
+    const fmt = day => { const [y, m, dd] = day.split('-').map(Number); return this.lang() === 'it' ? `${dd} ${['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'][m - 1]} ${y}` : `${dd} ${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]} ${y}`; };
     let dailyText = '';
     if (G && G.daily && rk.phase === 'over') {
       const w = winner(G), r = Math.min(G.round, MAX_ROUNDS), sq = id => G.own[id] === 'me' ? '🟦' : G.own[id] === 'cpu' ? '🟥' : '⬜';
@@ -3938,7 +4086,8 @@ class Component extends DCLogic {
       soundIcon: this.soundOn() ? '🔊' : '🔇', soundLabel: this.soundOn() ? 'Sound on' : 'Sound off', toggleSound: () => this.toggleSound(),
       hasEvent: !!(G && G.event && rk.phase !== 'over'), eventText: G && G.event ? `${G.event.icon} ${G.event.title}: ${G.event.text}` : '',
       rIsDaily: !!dailyText, dailyText, dailyShare: share,
-      rRematch: () => rk && rk.mp ? this.mpOpen() : this.startRisk(G && G.daily ? G.daily : null),
+      rRematch: () => rk && rk.mp ? this.mpOpen() : this.startRisk(null),
+      rematchLabel: G && G.daily ? this.tx('Nuova partita', 'New game') : rk && rk.mp ? this.tx('Nuova sfida', 'New challenge') : T_UI[this.lang()].rematch,
     };
   }
   renderVals() {
@@ -3964,7 +4113,19 @@ class Component extends DCLogic {
       coText: s.callout ? s.callout.text : '', coSub: s.callout ? s.callout.sub : '',
       coBg: s.callout ? { good: '#e3b341', bad: '#b5372a', neutral: '#2a1d12' }[s.callout.kind] : 'transparent',
       coColor: s.callout && s.callout.kind === 'good' ? '#2a1d12' : '#f6eedb',
-      startRisk: () => this.beginGame(), goHome: () => s.screen === 'risk' && s.rk && s.rk.mp ? this.mpLeave() : go('home')(),
+      startRisk: () => this.beginGame(), goHome: () => s.screen === 'risk' ? this.askExit() : go('home')(),
+      exitV: (() => {
+        const n = s.rk && s.rk.mp ? s.rk.mp.name : null;
+        return { on: !!(s.exitAsk && s.screen === 'risk'), title: this.tx('Vuoi uscire?', 'Leave the game?'),
+          text: n ? this.tx(`La sfida andrà persa: la vittoria va a ${n}.`, `The challenge will be lost: ${n} gets the win.`)
+            : this.tx('La partita resta salvata: potrai riprenderla dalla home. I punti che hai già guadagnato non vanno persi.', 'The game stays saved: you can resume it from the home screen. The points you have earned are not lost.'),
+          leave: () => this.doExit(), stay: () => this.setState({ exitAsk: false }), leaveLabel: n ? this.tx('Esci dalla sfida', 'Leave the challenge') : this.tx('Esci e salva', 'Save and leave'), stayLabel: this.tx('Continua a giocare', 'Keep playing') };
+      })(),
+      resumeV: (() => {
+        const x = s.screen === 'home' ? this.savedGame() : null;
+        return { on: !!x, label: x ? this.tx(`▶ Riprendi la partita · round ${Math.min(x.rk.G.round, MAX_ROUNDS)}`, `▶ Resume your game · round ${Math.min(x.rk.G.round, MAX_ROUNDS)}`) : '',
+          note: this.tx('Se ne inizi una nuova, i punti di quella salvata vanno comunque nella tua carriera.', 'If you start a new one, the saved game’s points still go to your career.'), go: () => this.resumeGame() };
+      })(),
       mpOk: mpAvail(), mpOpen: () => this.mpOpen(), isMp: s.screen === 'mp', mpv: this.mpVals(), tutOpen: () => this.setState({ tut: { step: 0, play: false } }), ...this.tutVals(),
       homeViewBox: `0 0 ${MAP.W} ${MAP.H}`,
       homeShapes: MAP.shapes.map(m => { const c = byGeo(m.k), o = c ? home.own[c.id] : undefined; return { d: m.d, fill: !c ? '#b8ac8e' : '#efe2c2' }; }),
