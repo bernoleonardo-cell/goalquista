@@ -3745,8 +3745,8 @@ class Component extends DCLogic {
   }
   // After your save: the other phone learns how it went, and your own turn starts.
   mpAfterSave(G) {
-    const rk = this.state.rk, d = rk.defend, out = rk.out || {};
-    if (isOver(G)) return this.rOver(G, { defend: null });
+    const rk = this.state.rk, d = rk.defend || { id: rk.target, lvl: rk.lvl }, out = rk.out || {};
+    if (isOver(G)) return this.rOver(G, { defend: null, picked: null, out: null, q: null, target: null, hide: [], sticker: null });
     const mp = this.mpPush('save', G, { turn: rk.mp.side, move: { id: d.id, lvl: d.lvl, ok: rk.ok, out } });
     this.setState({ rk: { ...rk, G, mp, phase: 'map', defend: null, cpu: null, hide: [], sticker: null, target: null, q: null, picked: null, out: null, sel: null, note: '' } });
   }
@@ -3911,7 +3911,7 @@ class Component extends DCLogic {
     if (rk.picked !== null && rk.out) {
       const out = rk.out;
       if (out.save) {
-        const nm = byId(rk.defend.id).name;
+        const dc = byId((rk.defend && rk.defend.id) || rk.target), nm = dc ? dc.name : name;
         if (rk.ok) { verdict = 'What a save!'; verdictSub = out.bonus ? `The rival's shot is saved and you gain ${soldiers(out.bonus)}: ${nm} now has ${out.troops}.` : `The rival's shot is saved. ${nm} holds.`; }
         else { verdict = rk.picked === -1 ? 'Too slow!' : 'Goal for the rival'; vColor = RED; verdictSub = out.kind === 'hit' ? `You lose ${soldiers(rk.lvl)} in ${nm}: ${out.before} down to ${out.troops}.` : `${nm} has fallen. The rival moves in with ${soldiers(out.troops)}.`; }
       }
