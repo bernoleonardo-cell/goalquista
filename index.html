@@ -2047,7 +2047,7 @@ function mergeExtra(X) {
   curateBank();
 }
 // ---- Question bank rules (Leonardo, 24 November 2026) ----
-// Football from 2000 on: a question whose years (in the question or its answer) all fall before 2000 is left out.
+// Results and tables from 2000 on: a result question whose years all fall before 2000 is left out.
 // "Who came second / who lost the final" questions are capped, options never name a team or player the question
 // already names, notes like "(RSSSF, to 16 November 2025)" are dropped from the text, and a few spellings are fixed.
 const QYEAR_FROM = 2000;
@@ -2076,9 +2076,13 @@ function fixQ(q) {
 }
 // Years in "up to 2026" or a source note only date the record, not the player's era.
 const eraText = s => String(s || '').replace(NOTE_RE, '').replace(/\b(up to|until|to date,?|as of|fino al?|ad oggi)\s+(\d+\s+\w+\s+)?\d{4}/gi, '');
-// Cards about players whose careers ended before 2000, even when their clues carry no year.
-const OLD_ERA = new Set(['Zbigniew Boniek', 'Oleh Blokhin']);
-const qOldOnly = q => { if (q.clues && q.clues.length && OLD_ERA.has(q.o[q.a])) return true; const ys = q.clues && q.clues.length ? qYears(eraText(q.clues.join(' '))) : qYears(eraText(q.text) + ' ' + (q.o ? q.o[q.a] : '')); return ys.length > 0 && Math.max(...ys) < QYEAR_FROM; };
+// Only results and tables (who won a league, a cup, a final, who finished second, award winners from the
+// result tables) are limited to 2000 on: few players know the older ones. "Who am I?" cards and the other
+// questions can be about any era (Leonardo, 24 November 2026).
+const RESULT_RE = /\b(won|win|winners?|champions?|title|finished (first|second|top)|second behind|runners?-up|beat in the|lost the final|final)\b/i;
+// Generated questions (no id, or a "T-" id) all come from result tables: match scores, how far a team went, top scorers.
+const isResultQ = q => !(q.clues && q.clues.length) && (!q.id || /^T-/.test(String(q.id)) || RESULT_RE.test(q.text || ''));
+const qOldOnly = q => { if (!isResultQ(q)) return false; const ys = qYears(eraText(q.text) + ' ' + (q.o ? q.o[q.a] : '')); return ys.length > 0 && Math.max(...ys) < QYEAR_FROM; };
 const namedIn = (name, text) => name && name.length >= 4 && new RegExp('(^|[^\\p{L}])' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}])', 'u').test(text);
 function curateBank() {
   const itName = {};
