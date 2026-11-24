@@ -2059,6 +2059,8 @@ function mergeExtra(X) {
   Object.keys(X.TRANSFER_Q || {}).forEach(t => { if (RQ[t]) RQ[t].push(...X.TRANSFER_Q[t]); });
   // "Who am I?" on players from the smaller football countries who played in Serie A (Leonardo, 24 November 2026), filed under their own country.
   Object.keys(X.SERIEA_WHO_Q || {}).forEach(t => { if (RQ[t]) RQ[t].push(...X.SERIEA_WHO_Q[t]); });
+  // Hard questions on Italian clubs with few Serie A seasons since 2000 (Leonardo, 24 November 2026).
+  Object.keys(X.SERIEA_SMALL_Q || {}).forEach(t => { if (RQ[t]) RQ[t].push(...X.SERIEA_SMALL_Q[t]); });
   const IT = X.RQ_IT || {};
   Object.values(RQ).forEach(list => list.forEach(q => { const t = IT[q.text]; if (t && !q.it) q.it = { text: t[0], o: t[1] || q.o, fact: t[2], clues: t[3] || null }; }));
   curateBank();
