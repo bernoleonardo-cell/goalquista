@@ -2096,7 +2096,7 @@ const eraText = s => String(s || '').replace(NOTE_RE, '').replace(/\b(up to|unti
 // questions can be about any era (Leonardo, 24 November 2026).
 const RESULT_RE = /\b(won|win|winners?|champions?|title|finished (first|second|top)|second behind|runners?-up|beat in the|lost the final|final)\b/i;
 // Generated questions (no id, or a "T-" id) all come from result tables: match scores, how far a team went, top scorers.
-const isResultQ = q => !(q.clues && q.clues.length) && !/^TR-/.test(String(q.id || '')) && (!q.id || /^T-/.test(String(q.id)) || RESULT_RE.test(q.text || ''));
+const isResultQ = q => !(q.clues && q.clues.length) && !/^TR[MH]?-/.test(String(q.id || '')) && (!q.id || /^T-/.test(String(q.id)) || RESULT_RE.test(q.text || ''));
 const qOldOnly = q => { if (!isResultQ(q)) return false; const ys = qYears(eraText(q.text) + ' ' + (q.o ? q.o[q.a] : '')); return ys.length > 0 && Math.max(...ys) < QYEAR_FROM; };
 const namedIn = (name, text) => name && name.length >= 4 && new RegExp('(^|[^\\p{L}])' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}])', 'u').test(text);
 function curateBank() {
