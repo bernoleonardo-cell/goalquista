@@ -2,7 +2,7 @@
 import functools, http.server, json, os, sys, threading, time
 from playwright.sync_api import sync_playwright
 
-ROOT = sys.argv[1] if len(sys.argv) > 1 else '/tmp/gqt'
+ROOT = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))   # the built site in this repo
 SHOTS = '/tmp/mpshots'
 FAKE = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fakefb.js')).read()
 os.makedirs(SHOTS, exist_ok=True)
@@ -23,6 +23,7 @@ with sync_playwright() as p:
     br = p.chromium.launch(executable_path='/usr/bin/google-chrome', args=['--no-sandbox'])
     ctx = br.new_context(viewport={'width': 400, 'height': 860}, service_workers='block')
     ctx.route('**/vendor/firebase-app-compat.js', lambda r: r.fulfill(body=FAKE, content_type='text/javascript'))
+    ctx.route('**/static.cloudflareinsights.com/**', lambda r: r.fulfill(body='', content_type='text/javascript'))
     ctx.route('**/vendor/firebase-auth-compat.js', lambda r: r.fulfill(body='', content_type='text/javascript'))
     ctx.route('**/vendor/firebase-database-compat.js', lambda r: r.fulfill(body='', content_type='text/javascript'))
     ctx.add_init_script("localStorage.setItem('fr-tutorial-done','1'); localStorage.setItem('fr-tips-done','1'); localStorage.setItem('fr-lang','it');" + HELP)
@@ -113,20 +114,30 @@ with sync_playwright() as p:
     # A shot: the host gets (locally) a territory next to Turkey and attacks Turkey; the guest must save.
     ev(A, "(() => { const c = __C(), rk = c.state.rk, n = ['GRE', 'BAL', 'REU'].find(x => rk.G.own[x] === null); c.setState({ rk: { ...rk, G: { ...rk.G, own: { ...rk.G.own, [n]: 'me' }, troops: { ...rk.G.troops, [n]: 2 } } } }); })()")
     A.wait_for_timeout(200)
-    pts_before = st(A)['myPts']
+    # Turkey has 3 tanks: a level 2 hit cannot take it, so it lands at once with no save (Leonardo, 24 November 2026).
     ev(A, "__C().rAttack('TUR', 2)"); A.wait_for_timeout(300)
     ev(A, "__C().rPick(__C().state.rk.q.a)"); A.wait_for_timeout(300)
-    check('a right answer on the rival is a shot', ev(A, "__C().state.rk.out.kind") == 'shot')
+    check('a hit that cannot take the territory is not a shot', ev(A, "__C().state.rk.out.kind") == 'hit')
+    ev(A, "__C().rContinue()"); A.wait_for_timeout(900)
+    sb = st(B)
+    check('the guest just loses the tanks, with no save', sb['phase'] == 'cpu' and not ev(B, "!!__C().state.rk.defend") and ev(B, "__C().state.rk.G.troops.TUR") == 1, sb)
+    ev(B, "__C().rCpuGo()"); B.wait_for_timeout(200); ev(B, "__C().rSkip()"); B.wait_for_timeout(800); ev(A, "__C().rCpuGo()"); A.wait_for_timeout(200)
+
+    # Now Turkey has 1 tank: a right answer would take it, so the guest gets a save.
+    ev(A, "(() => { const c = __C(), rk = c.state.rk; c.setState({ rk: { ...rk, G: { ...rk.G, streak: 0 } } }); })()")   # no hat-trick card in the way
+    ev(A, "__C().rAttack('TUR', 1)"); A.wait_for_timeout(300)
+    ev(A, "__C().rPick(__C().state.rk.q.a)"); A.wait_for_timeout(300)
+    check('a right answer that would take the territory is a shot', ev(A, "__C().state.rk.out.kind") == 'shot')
     A.screenshot(path=f'{SHOTS}/10-host-shot.png')
     ev(A, "__C().rContinue()"); A.wait_for_timeout(900)
     sb = st(B)
     check('guest must save', sb['phase'] == 'ask' and ev(B, "!!__C().state.rk.defend"), sb)
     check('board unchanged before the save', 'TUR:me' in sb['own'])
     B.screenshot(path=f'{SHOTS}/11-guest-save.png')
-    ev(B, "__C().rPick((__C().state.rk.q.a + 1) % 4)"); B.wait_for_timeout(300); ev(B, "__C().rContinue()"); B.wait_for_timeout(900)
+    ev(B, "__C().rPick(__C().state.rk.q.a)"); B.wait_for_timeout(300); ev(B, "__C().rContinue()"); B.wait_for_timeout(900)
     sa, sb = st(A), st(B)
-    check('missed save costs the guest tanks', ev(B, "__C().state.rk.G.troops.TUR") == 1, ev(B, "__C().state.rk.G.troops.TUR"))
-    check('host is told how the save went', 'non para' in (ev(A, "__C().state.rk.mpNote") or ''), ev(A, "__C().state.rk.mpNote"))
+    check('a save keeps the tanks the guest had, nothing extra', ev(B, "__C().state.rk.G.troops.TUR") == 1 and 'TUR:me' in sb['own'], ev(B, "__C().state.rk.G.troops.TUR"))
+    check('host is told how the save went', 'para' in (ev(A, "__C().state.rk.mpNote") or ''), ev(A, "__C().state.rk.mpNote"))
     check('after the save the guest plays', sb['phase'] == 'map' and sa['phase'] == 'wait', (sa['phase'], sb['phase']))
     A.screenshot(path=f'{SHOTS}/12-host-note.png')
     check('host troops on Turkey agree', ev(A, "__C().state.rk.G.troops.TUR") == 1)
@@ -141,7 +152,7 @@ with sync_playwright() as p:
     ev(B, "__C().mpOpen()"); B.wait_for_timeout(200)
     B.locator('input').nth(1).fill(code); B.get_by_role('button', name='Entra').click(); B.wait_for_timeout(1500)
     sb = st(B)
-    check('guest rejoins in the waiting phase', sb['screen'] == 'risk' and sb['phase'] == 'wait' and sb['round'] == 3, sb)
+    check('guest rejoins in the waiting phase', sb['screen'] == 'risk' and sb['phase'] == 'wait' and sb['round'] == 4, sb)
 
     # Host leaves by mistake? First tap warns, second tap leaves: the guest wins.
     ev(A, "__C().askExit()"); A.wait_for_timeout(200)
@@ -167,6 +178,20 @@ with sync_playwright() as p:
     ev(A, "__C().mpGoneAt = Date.now() - 59500"); A.wait_for_timeout(1800)
     check('host wins by forfeit after the grace time', st(A)['phase'] == 'over' and ev(A, "__C().state.rk.mpWin") == 'me')
     A.screenshot(path=f'{SHOTS}/15-forfeit.png')
+    # A code nobody joined within an hour no longer works, neither for a friend nor for the host's waiting room.
+    ev(A, "__C().mpOpen()"); A.wait_for_timeout(200)
+    A.get_by_role('button', name='Crea la sfida').click(); A.wait_for_timeout(900)
+    code3 = ev(A, "__C().state.mpM.code")
+    ev(A, f"firebase.database().ref('rooms/{code3}/created').set(Date.now() - 2 * 3600 * 1000)"); A.wait_for_timeout(300)
+    D = ctx.new_page(); D.on('pageerror', lambda e: errs.append('D ' + str(e)))
+    D.goto(URL); D.wait_for_timeout(800); ev(D, f"__C().setState({{ screen: 'home' }}); __C().mpOpen('{code3}')"); D.wait_for_timeout(300)
+    D.locator('input').first.fill('Sara'); D.get_by_role('button', name='Entra').click(); D.wait_for_timeout(900)
+
+    check('an hour-old code is refused as expired', D.get_by_text('Codice scaduto').count() == 1 and ev(D, "__C().state.screen") != 'risk')
+    D.screenshot(path=f'{SHOTS}/16-expired.png')
+    ev(A, "__C().mpExpireLobby(Date.now() - 2 * 3600 * 1000)"); A.wait_for_timeout(400)
+    check('the host\'s waiting room closes after the hour', ev(A, "__C().state.mpM.step") == 'menu' and A.get_by_text('Codice scaduto').count() == 1)
+    check('the expired room is deleted', ev(A, f"new Promise(r => firebase.database().ref('rooms/{code3}').once('value').then(s => r(s.val() === null)))"))
     A.wait_for_timeout(500)
     check('no page errors', not errs, errs)
     check('no render errors', not rerrs, rerrs[:3])

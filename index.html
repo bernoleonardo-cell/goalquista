@@ -2901,6 +2901,7 @@ const BOOM = Array.from({ length: 36 }, (_, i) => {
 // The board is stored from the host's side ('me' = host, 'cpu' = guest); the guest flips it on the way in and out.
 const MP_GRACE = 60;                // seconds a player may drop out before the other wins
 const MP_STALE = 25 * 3600 * 1000;  // rooms older than this are cleaned up
+const MP_WAIT = 3600 * 1000;        // a code nobody joined within an hour no longer works (Leonardo, 25 November 2026)
 const MP_ABC = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
 const MPT = {
   it: {
@@ -2909,7 +2910,7 @@ const MPT = {
     nameLabel: 'Il tuo nome', namePh: 'Es. Leo', create: 'Crea la sfida', haveCode: 'Hai ricevuto un codice?', join: 'Entra',
     busy: 'Collegamento…', codeLabel: 'Codice della sfida', sendLink: 'Manda questo link al tuo amico: appena entra, la partita comincia.',
     shareBtn: 'Condividi il link', copied: 'Link copiato', waitingFriend: 'In attesa del tuo amico…', cancel: 'Annulla',
-    errName: 'Scrivi il tuo nome per iniziare.', errCode: 'Il codice ha 4 lettere.', errNoRoom: 'Nessuna sfida con questo codice. Controlla le lettere o chiedi un nuovo link.',
+    errName: 'Scrivi il tuo nome per iniziare.', errCode: 'Il codice ha 4 lettere.', errNoRoom: 'Nessuna sfida con questo codice. Controlla le lettere o chiedi un nuovo link.', errExpired: 'Codice scaduto: nessuno è entrato entro un’ora. Creane uno nuovo.',
     errFull: 'Questa sfida ha già due giocatori.', errNet: 'Connessione non riuscita. Controlla la rete e riprova.',
     shareText: 'Ti sfido a Goalquista! Entra con il codice {c}:',
     waitHead: 'Turno di {n}', waitPick: '{n} sta scegliendo la mossa…', waitBase: '{n} sta scegliendo la sua base…',
@@ -2930,7 +2931,7 @@ const MPT = {
     nameLabel: 'Your name', namePh: 'E.g. Leo', create: 'Create the challenge', haveCode: 'Got a code?', join: 'Join',
     busy: 'Connecting…', codeLabel: 'Challenge code', sendLink: 'Send this link to your friend: the game starts as soon as they join.',
     shareBtn: 'Share the link', copied: 'Link copied', waitingFriend: 'Waiting for your friend…', cancel: 'Cancel',
-    errName: 'Type your name to start.', errCode: 'The code has 4 letters.', errNoRoom: 'No challenge with this code. Check the letters or ask for a new link.',
+    errName: 'Type your name to start.', errCode: 'The code has 4 letters.', errNoRoom: 'No challenge with this code. Check the letters or ask for a new link.', errExpired: 'Code expired: nobody joined within an hour. Create a new one.',
     errFull: 'This challenge already has two players.', errNet: 'Could not connect. Check your connection and try again.',
     shareText: 'I challenge you to Goalquista! Join with code {c}:',
     waitHead: '{n}’s turn', waitPick: '{n} is choosing a move…', waitBase: '{n} is choosing a base…',
@@ -3537,7 +3538,16 @@ class Component extends DCLogic {
       const r = this.mpRef('guest'), cb = s => { const g = s.val(); if (g && g.name) this.mpBegin('a', { ...this.mpRoom, guest: g }); };
       r.on('value', cb);
       this.mpSubs = [() => r.off('value', cb)];
+      this.mpExpireLobby(this.mpRoom.created);
     } catch (e) { this.mpSetErr('errNet'); }
+  }
+  // Nobody joined within the hour: close the waiting room, delete it and say so.
+  mpExpireLobby(created) {
+    const t = setTimeout(() => {
+      const m = this.state.mpM; if (!m || m.step !== 'lobby') return;
+      this.mpCancel(); this.mpSetErr('errExpired');
+    }, Math.max(0, created + MP_WAIT - Date.now()));
+    this.mpSubs = [...(this.mpSubs || []), () => clearTimeout(t)];
   }
   async mpJoin() {
     const m = this.state.mpM, name = mpCleanName(m.name), code = String(m.code || '').toUpperCase().replace(/[^A-Z]/g, '');
@@ -3550,6 +3560,8 @@ class Component extends DCLogic {
       this.mpDb = net.db; this.mpUid = net.uid;
       const room = (await net.db.ref('rooms/' + code).once('value')).val();
       if (!room || !room.host) return this.mpSetErr('errNoRoom');
+      // A challenge still waiting for its second player after an hour has expired, for the host too. A game already under way is not affected.
+      if (!room.guest && Date.now() - (room.created || 0) > MP_WAIT) return this.mpSetErr('errExpired');
       this.mpCodeNow = code;
       // Back in a challenge you had already joined (a reload, a dropped connection): pick up where it was.
       if (room.host.uid === net.uid) {
@@ -3559,6 +3571,7 @@ class Component extends DCLogic {
         this.mpPresence();
         const r = this.mpRef('guest'), cb = s => { const g = s.val(); if (g && g.name) this.mpBegin('a', { ...room, guest: g }); };
         r.on('value', cb); this.mpSubs = [() => r.off('value', cb)];
+        this.mpExpireLobby(room.created);
         return;
       }
       if (room.guest && room.guest.uid !== net.uid) return this.mpSetErr('errFull');
@@ -3579,8 +3592,9 @@ class Component extends DCLogic {
   mpLink(code) { try { return location.origin + location.pathname + '?sfida=' + code; } catch (e) { return '?sfida=' + code; } }
   mpCancel() {
     const m = this.state.mpM;
-    if (m && m.step === 'lobby' && this.mpDb && this.mpSide === 'a') { try { this.mpRef('').remove().catch(() => {}); } catch (e) {} }
-    this.mpDetach();
+    const del = m && m.step === 'lobby' && this.mpDb && this.mpSide === 'a';
+    this.mpDetach();   // presence first, then the room: removing presence after the room would leave a stray entry
+    if (del) { try { this.mpRef('').remove().catch(() => {}); } catch (e) {} }
     this.setState({ mpM: { ...m, step: 'menu', code: '', err: '' } });
   }
   mpPresence() {
